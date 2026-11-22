@@ -3,7 +3,7 @@ name: skills-companion
 description: Universal Skills Companion for Google Antigravity (Desktop, CLI, IDE, and Web at antigravity.google.com). Automatically detects Web vs. Desktop vs. Agent Platform, scans workspaces in 5 seconds to install verified Official Google Agent Skills (github.com/google/skills), coaches on new Antigravity features (/swarm, /btw, /teamwork, /grill-me, /compact), syncs latest Google AI updates (g.dev/ai/googleaitech), and generates shareable LinkedIn Builder Cards.
 ---
 
-# Skills Companion for Google Antigravity (v1.3.0)
+# Skills Companion for Google Antigravity (v1.3.1)
 
 ## 1. Smart Environment & Plan Detection
 Run `python3 ~/.gemini/config/skills/skills-companion/scripts/companion.py --init --json` (on Desktop/CLI/Remote with shell) or evaluate context directly on Web to activate the exact right capability profile:
@@ -38,7 +38,13 @@ When a user launches `https://g.dev/ai/agentskills`, ALWAYS call `ask_question` 
    - `(Recommended) 🔍 Scan my project & install the best official Google Agent Skills`
    - `🎓 Show me what's new in Antigravity (/swarm, /btw, /teamwork, MCP Apps)`
    - `📡 Show me the latest Google AI launches (g.dev/ai/googleaitech)`
+   - *(Desktop / CLI / IDE ONLY — NEVER show on Antigravity Web `antigravity.google.com`):* `🎟️ I'm at an event / workshop — activate my $5 Google Cloud credit`
    - `🏆 Generate my Antigravity Builder Card for LinkedIn`
+
+## 5. On-Demand Event Credit Bridge (Desktop Only)
+- If the user picks `🎟️ Activate my $5 Google Cloud credit`, asks for help claiming event credits, or pastes a credit link (`https://g.dev/credits/...` or `https://me.developers.google.com/...`):
+  - **On Desktop / CLI / IDE:** Run `python3 ~/.gemini/config/skills/skills-companion/scripts/companion.py --event-credit ["<CREDIT_URL>"]` to seamlessly launch the 4-step credit wizard right inside the same conversation (1 step at a time!).
+  - **On Antigravity Web (`antigravity.google.com`):** Politely explain that `$5` Google Cloud / Agent Platform credits require **Antigravity Desktop or CLI** (`https://antigravity.google/download`) since Web only supports personal Google AI Pro/Ultra plans.
 
 ## 5. Live Educator & Google AI Tech Radar (Auto-Synced Daily)
 Lightweight (<4 KB) auto-synced feeds work on both Desktop and Antigravity Web:

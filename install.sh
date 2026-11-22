@@ -36,8 +36,14 @@ cat <<'EOF' > "$RULES_DIR/skills-companion.md"
 2. **Interactive First-Launch Onboarding (`g.dev/ai/agentskills`):**
    - When the user pastes `https://g.dev/ai/agentskills` or asks to launch their Skills Companion, ALWAYS call `ask_question` in the same turn with 2 questions:
      - Q1: Persona (`💻 Pro Developer` vs `👷 Vibe Coder / Builder`)
-     - Q2: First action (`🔍 Scan my project & install best Google skills`, `🎓 What's new in Antigravity (/swarm, /btw, /teamwork)`, `📡 Latest Google AI updates (g.dev/ai/googleaitech)`, or `🏆 Generate my LinkedIn Builder Card`)
+     - Q2: First action:
+       - `(Recommended) 🔍 Scan my project & install the best official Google Agent Skills`
+       - `🎓 Show me what's new in Antigravity (/swarm, /btw, /teamwork, MCP Apps)`
+       - `📡 Show me the latest Google AI launches (g.dev/ai/googleaitech)`
+       - *(Desktop / CLI / IDE ONLY — omit on Antigravity Web `antigravity.google.com`)*: `🎟️ I'm at an event / workshop — activate my $5 Google Cloud credit`
+       - `🏆 Generate my Antigravity Builder Card for LinkedIn`
    - Save persona via `python3 ~/.gemini/config/skills/skills-companion/scripts/companion.py --persona <developer|builder>`.
+   - **On-Demand Event Credit Bridge:** If a Desktop user picks the `$5` credit option, asks to activate event credits, or pastes a `https://g.dev/credits/...` link, run `python3 ~/.gemini/config/skills/skills-companion/scripts/companion.py --event-credit ["<CREDIT_URL>"]` (1 step at a time!). If on Antigravity Web (`antigravity.google.com`), politely explain that `$5` GCP credits require Antigravity Desktop/CLI (`https://antigravity.google/download`).
 3. **5-Second Workspace Stack Auto-Loader:**
    - When asked to scan a project or when opening a workspace containing `firebase.json`, `pubspec.yaml`, `package.json`, `requirements.txt`, `Dockerfile`, or `build.gradle.kts`, run:
      `python3 ~/.gemini/config/skills/skills-companion/scripts/companion.py --scan`

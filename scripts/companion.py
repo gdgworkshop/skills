@@ -11,6 +11,7 @@ import json
 import os
 import platform
 import re
+import subprocess
 import sys
 import urllib.parse
 import urllib.request
@@ -18,8 +19,10 @@ import uuid
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-VERSION = "1.3.0"
+VERSION = "1.3.1"
 CARD_STUDIO_URL = "https://gdgworkshop.github.io/skills/card.html"
+WORKSHOP_INSTALLER_URL = "https://raw.githubusercontent.com/gdgworkshop/tokenmaxxing/main/install.sh"
+WORKSHOP_SCRIPT_PATH = Path.home() / ".gemini" / "config" / "skills" / "tokenmaxxing" / "scripts" / "tokenmaxx.py"
 REPO_RAW = "https://raw.githubusercontent.com/gdgworkshop/skills/main"
 COMPANION_DIR = Path.home() / ".gemini" / "config" / "skills" / "skills-companion"
 LOCAL_REPO_REFS = Path(__file__).resolve().parent.parent / "references"
@@ -659,6 +662,48 @@ def cmd_card(name: str = None, project: str = None, override_mode: str = None, a
     print("=" * 68)
 
 
+def cmd_event_credit(credit_url: str = "", override_mode: str = None):
+    """
+    On-demand Event Credit Bridge (v1.3.1):
+    - On Antigravity Web: politely explains Agent Platform / $5 GCP credits require Desktop/CLI.
+    - On Desktop/CLI: seamlessly invokes the battle-tested 4-step credit wizard from
+      gdgworkshop/tokenmaxxing right inside the same conversation.
+    """
+    env = detect_environment(override_mode)
+    send_telemetry("event_credit_bridge_triggered", {"mode": env["mode"], "has_url": bool(credit_url)})
+
+    if env["is_web"]:
+        print("=" * 68)
+        print(" 🌐 EVENT $5 GOOGLE CLOUD CREDITS — DESKTOP REQUIRED")
+        print("=" * 68)
+        print(" Antigravity Web (antigravity.google.com) runs on personal Google AI")
+        print(" Pro / Ultra plans and does not support Google Cloud Agent Platform.")
+        print("")
+        print(" 👉 To claim & use your $5 event credit:")
+        print("    1. Download Antigravity Desktop or CLI: https://antigravity.google/download")
+        print("    2. Open Antigravity on your machine and paste your credit link!")
+        print("=" * 68)
+        return
+
+    if not WORKSHOP_SCRIPT_PATH.exists():
+        print("🎟️ Bootstrapping the 4-step GDG Event Credit wizard...")
+        try:
+            subprocess.run(
+                f"curl -fsSL {WORKSHOP_INSTALLER_URL} | bash",
+                shell=True,
+                check=True,
+            )
+        except Exception as e:
+            print(f"⚠️ Could not bootstrap event credit wizard automatically: {e}")
+            print("👉 Run manually: curl -fsSL https://raw.githubusercontent.com/gdgworkshop/tokenmaxxing/main/install.sh | bash")
+            return
+
+    cmd = [sys.executable, str(WORKSHOP_SCRIPT_PATH), "--step1"]
+    if credit_url and "g.dev/ai/agentskills" not in credit_url and "g.dev/ai/workshop" not in credit_url:
+        cmd.append(credit_url)
+    subprocess.run(cmd)
+
+
 def cmd_persona(role: str):
     norm = "builder" if role.lower() in ("builder", "vibe", "vibe-coder", "vibecoder") else "developer"
     state = load_state()
@@ -685,6 +730,7 @@ def main():
     parser.add_argument("--card", action="store_true", help="Generate a pre-filled LinkedIn Builder Card studio link & caption")
     parser.add_argument("--name", type=str, help="Display name for --card (saved to state.json)")
     parser.add_argument("--project", type=str, help="Optional project highlight for --card")
+    parser.add_argument("--event-credit", dest="event_credit", nargs="?", const="", default=None, help="Activate $5 GDG event cloud credit (Desktop/CLI only)")
     parser.add_argument("--json", action="store_true", help="Output structured JSON")
     args = parser.parse_args()
 
@@ -707,6 +753,8 @@ def main():
         cmd_unlock(args.unlock)
     elif args.card:
         cmd_card(name=args.name, project=args.project, override_mode=args.mode, as_json=args.json)
+    elif args.event_credit is not None:
+        cmd_event_credit(credit_url=args.event_credit, override_mode=args.mode)
     else:
         cmd_init(override_mode=args.mode, as_json=args.json)
 
