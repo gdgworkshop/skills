@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """
-Skills Companion for Google Antigravity (v1.1.0)
-Smart Environment Detector (Web / Desktop / Agent Platform) + 5-Second Workspace
-Stack Auto-Loader for Official Google Agent Skills (github.com/google/skills).
+Skills Companion for Google Antigravity (v1.2.0)
+- Smart Environment Detector (Antigravity Web / Desktop Personal / Agent Platform)
+- 5-Second Workspace Stack Auto-Loader (github.com/google/skills)
+- Self-Updating Antigravity Educator & Live Google AI Tech Radar (g.dev/ai/googleaitech)
 """
 
 import argparse
@@ -16,8 +17,10 @@ import uuid
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-VERSION = "1.1.0"
+VERSION = "1.2.0"
+REPO_RAW = "https://raw.githubusercontent.com/gdgworkshop/skills/main"
 COMPANION_DIR = Path.home() / ".gemini" / "config" / "skills" / "skills-companion"
+LOCAL_REPO_REFS = Path(__file__).resolve().parent.parent / "references"
 SKILLS_ROOT = Path.home() / ".gemini" / "config" / "skills"
 STATE_FILE = COMPANION_DIR / "state.json"
 WORKSHOP_STATE_FILE = SKILLS_ROOT / "tokenmaxxing" / "state.json"
@@ -68,7 +71,11 @@ MARKETPLACE_CARDS = {
 def load_state() -> dict:
     if STATE_FILE.exists():
         try:
-            return json.loads(STATE_FILE.read_text(encoding="utf-8"))
+            data = json.loads(STATE_FILE.read_text(encoding="utf-8"))
+            data.setdefault("seen_tips", [])
+            data.setdefault("unlocked_features", [])
+            data.setdefault("installed_skills", [])
+            return data
         except Exception:
             pass
     return {
@@ -109,8 +116,50 @@ def send_telemetry(event_name: str, params: dict = None):
         pass
 
 
+def load_reference_json(filename: str, max_age_hours: int = 24):
+    """
+    Loads a lightweight JSON feed (2-6 KB). Refreshes from GitHub raw URL if cached copy
+    is missing or older than max_age_hours, with instant offline fallback.
+    """
+    installed_path = COMPANION_DIR / "references" / filename
+    local_path = LOCAL_REPO_REFS / filename
+    candidate = installed_path if installed_path.exists() else local_path
+
+    needs_refresh = True
+    if candidate.exists():
+        try:
+            age = datetime.now(timezone.utc).timestamp() - candidate.stat().st_mtime
+            if age < max_age_hours * 3600:
+                needs_refresh = False
+        except Exception:
+            pass
+
+    if needs_refresh and os.environ.get("SKILLS_COMPANION_OFFLINE") != "1":
+        try:
+            url = f"{REPO_RAW}/references/{filename}"
+            req = urllib.request.Request(url, headers={"User-Agent": f"SkillsCompanion/{VERSION}"})
+            with urllib.request.urlopen(req, timeout=4) as resp:
+                if resp.status == 200:
+                    text = resp.read().decode("utf-8")
+                    data = json.loads(text)
+                    try:
+                        installed_path.parent.mkdir(parents=True, exist_ok=True)
+                        installed_path.write_text(text, encoding="utf-8")
+                    except Exception:
+                        pass
+                    return data
+        except Exception:
+            pass
+
+    if candidate.exists():
+        try:
+            return json.loads(candidate.read_text(encoding="utf-8"))
+        except Exception:
+            pass
+    return None
+
+
 def _has_active_workshop_credit() -> tuple:
-    """Checks passively (documented local state file) if user has an active GCP workshop session."""
     if not WORKSHOP_STATE_FILE.exists():
         return False, None
     try:
@@ -127,13 +176,6 @@ def _has_active_workshop_credit() -> tuple:
 
 
 def detect_environment(override_mode: str = None) -> dict:
-    """
-    Smart, sandbox-safe environment & plan detector.
-    Returns one of 3 clean capability profiles:
-      1. antigravity_web   (antigravity.google.com Remote Agent — personal Pro/Ultra only)
-      2. desktop_personal  (Antigravity Desktop / CLI / IDE on Personal Pro/Ultra/Free)
-      3. agent_platform    (Google Cloud Agent Platform / Vertex AI / Active Workshop Grant)
-    """
     sys_name = platform.system().lower()
     is_remote_container = bool(
         os.environ.get("ANTIGRAVITY_REMOTE")
@@ -142,7 +184,6 @@ def detect_environment(override_mode: str = None) -> dict:
         or (sys_name == "linux" and not os.environ.get("DISPLAY") and (Path("/.dockerenv").exists() or os.environ.get("KUBERNETES_SERVICE_HOST")))
     )
 
-    # Check documented Agent Platform / Vertex AI / Workshop signals
     has_workshop, workshop_project = _has_active_workshop_credit()
     gcp_project = os.environ.get("GOOGLE_CLOUD_PROJECT") or workshop_project
     is_vertex_env = (
@@ -166,7 +207,6 @@ def detect_environment(override_mode: str = None) -> dict:
     else:
         mode = "desktop_personal"
 
-    # Build capability matrix strictly based on detected mode
     capabilities = {
         "official_skills_hub": True,
         "workspace_stack_scan": True,
@@ -189,6 +229,7 @@ def detect_environment(override_mode: str = None) -> dict:
 
     return {
         "mode": mode,
+        "surface_key": "web" if mode == "antigravity_web" else ("cloud" if mode == "agent_platform" else "desktop"),
         "label": labels[mode],
         "os": sys_name,
         "is_web": mode == "antigravity_web",
@@ -210,15 +251,10 @@ def get_installed_skills() -> set:
 
 
 def scan_workspace(cwd: Path = None) -> dict:
-    """
-    5-second smart workspace stack scanner.
-    Inspects standard manifest files to recommend exact official Google Agent Skills
-    and official Antigravity Marketplace plugins.
-    """
     root = cwd or Path.cwd()
     installed = get_installed_skills()
     detected_stacks = []
-    recs = {}  # skill_name -> reason
+    recs = {}
     marketplace = set()
 
     def add_rec(skill: str, reason: str):
@@ -227,13 +263,11 @@ def scan_workspace(cwd: Path = None) -> dict:
         if skill in MARKETPLACE_CARDS:
             marketplace.add(MARKETPLACE_CARDS[skill])
 
-    # 1. Firebase
     if (root / "firebase.json").exists() or (root / ".firebaserc").exists():
         detected_stacks.append("Firebase")
         add_rec("firebase-basics", "firebase.json detected")
         add_rec("firebase-firestore", "Firebase project detected")
 
-    # 2. Flutter / Dart
     pubspec = root / "pubspec.yaml"
     if pubspec.exists():
         detected_stacks.append("Flutter / Dart")
@@ -250,7 +284,6 @@ def scan_workspace(cwd: Path = None) -> dict:
         except Exception:
             pass
 
-    # 3. Android / Kotlin / Jetpack Compose
     for gradle in ("build.gradle.kts", "build.gradle", "app/build.gradle.kts", "app/build.gradle"):
         gp = root / gradle
         if gp.exists():
@@ -267,14 +300,12 @@ def scan_workspace(cwd: Path = None) -> dict:
             except Exception:
                 pass
 
-    # 4. Docker / Cloud Run
     for cloud_file in ("Dockerfile", "cloudbuild.yaml", "service.yaml"):
         if (root / cloud_file).exists():
             if "Containers / Cloud Run" not in detected_stacks:
                 detected_stacks.append("Containers / Cloud Run")
             add_rec("cloud-run-basics", f"{cloud_file} detected")
 
-    # 5. Node / JS / TS (package.json)
     pkg = root / "package.json"
     if pkg.exists():
         try:
@@ -294,7 +325,6 @@ def scan_workspace(cwd: Path = None) -> dict:
         except Exception:
             pass
 
-    # 6. Python (requirements.txt / pyproject.toml)
     for pyf in ("requirements.txt", "pyproject.toml"):
         p = root / pyf
         if p.exists():
@@ -311,7 +341,6 @@ def scan_workspace(cwd: Path = None) -> dict:
             except Exception:
                 pass
 
-    # 7. Go (go.mod)
     gomod = root / "go.mod"
     if gomod.exists():
         detected_stacks.append("Go")
@@ -324,13 +353,10 @@ def scan_workspace(cwd: Path = None) -> dict:
         except Exception:
             pass
 
-    recommendations = []
-    for sk, reason in recs.items():
-        recommendations.append({
-            "skill": sk,
-            "reason": reason,
-            "installed": sk in installed,
-        })
+    recommendations = [
+        {"skill": sk, "reason": reason, "installed": sk in installed}
+        for sk, reason in recs.items()
+    ]
 
     return {
         "workspace": str(root),
@@ -371,6 +397,114 @@ def install_single_skill(skill_name: str) -> bool:
 
     print(f"⚠️ Could not locate '{clean}' on github.com/google/skills. Browse: https://github.com/google/skills")
     return False
+
+
+def cmd_tip(context_topic: str = None, override_mode: str = None, as_json: bool = False):
+    env = detect_environment(override_mode)
+    state = load_state()
+    persona = state.get("persona") or "developer"
+    catalog = load_reference_json("educator_catalog.json") or []
+
+    eligible = [item for item in catalog if env["surface_key"] in item.get("surfaces", ["desktop", "cloud", "web"])]
+    if not eligible:
+        print("💡 Antigravity Tip: Try `/grill-me` before building to turn rough ideas into a clear architecture plan.")
+        return
+
+    chosen = None
+    if context_topic:
+        topic = context_topic.lower().strip()
+        for item in eligible:
+            if topic in item.get("contexts", []) or topic == item.get("id"):
+                chosen = item
+                break
+
+    if not chosen:
+        seen = set(state.get("seen_tips", []))
+        unlocked = set(state.get("unlocked_features", []))
+        unseen = [item for item in eligible if item["id"] not in seen and item["id"] not in unlocked]
+        if not unseen:
+            # Reset rotation cycle cleanly after user has seen all tips
+            state["seen_tips"] = []
+            unseen = [item for item in eligible if item["id"] not in unlocked] or eligible
+        chosen = unseen[0]
+
+    seen_list = state.get("seen_tips", [])
+    if chosen["id"] not in seen_list:
+        seen_list.append(chosen["id"])
+        state["seen_tips"] = seen_list
+        save_state(state)
+
+    tip_text = chosen.get(persona) or chosen.get("developer")
+    send_telemetry("educator_tip_shown", {"feature_id": chosen["id"], "context": context_topic or "rotation", "mode": env["mode"]})
+
+    if as_json:
+        print(json.dumps({"feature": chosen, "tip": tip_text, "persona": persona, "mode": env["mode"]}, indent=2))
+        return
+
+    print(tip_text)
+
+
+def cmd_unlock(feature_id: str):
+    clean = re.sub(r"[^a-zA-Z0-9_]", "_", feature_id.lower().strip().lstrip("/").replace("-", "_"))
+    state = load_state()
+    unlocked = set(state.get("unlocked_features", []))
+    is_new = clean not in unlocked
+    unlocked.add(clean)
+    state["unlocked_features"] = sorted(unlocked)
+    save_state(state)
+
+    catalog = load_reference_json("educator_catalog.json") or []
+    total = len(catalog) or 12
+    send_telemetry("feature_adopted", {"feature_id": clean, "is_new": is_new})
+    send_telemetry(f"feature_adopted_{clean}", {"feature_id": clean})
+
+    print(f"🏆 Unlocked Antigravity Power Feature: `{clean}` ({len(unlocked)}/{total} mastered!)")
+
+
+def cmd_whats_new(override_mode: str = None, as_json: bool = False):
+    env = detect_environment(override_mode)
+    state = load_state()
+    changelog = load_reference_json("antigravity_changelog.json") or {}
+    ai_updates = load_reference_json("google_ai_updates.json") or {}
+    catalog = load_reference_json("educator_catalog.json") or []
+
+    unlocked = state.get("unlocked_features", [])
+    send_telemetry("whats_new_viewed", {"mode": env["mode"]})
+
+    if as_json:
+        print(json.dumps({
+            "mode": env["mode"],
+            "mastery": {"unlocked": unlocked, "total": len(catalog)},
+            "antigravity_changelog": changelog,
+            "google_ai_updates": ai_updates,
+        }, indent=2))
+        return
+
+    print("=" * 68)
+    print(" 🎓 WHAT'S NEW IN ANTIGRAVITY & GOOGLE AI")
+    print("=" * 68)
+
+    releases = changelog.get("releases", [])
+    if releases:
+        latest = releases[0]
+        print(f"\n🚀 Latest Antigravity App Release: {latest.get('version')} ({latest.get('date')})")
+        print(f"   {latest.get('headline')}")
+        for h in latest.get("highlights", [])[:3]:
+            print(f"   • {h[:140]}{'...' if len(h) > 140 else ''}")
+        print(f"   Full changelog: {changelog.get('source', 'https://antigravity.google/docs/changelog')}")
+
+    updates = ai_updates.get("updates", [])
+    if updates:
+        print("\n📡 Latest Google AI Tech (from g.dev/ai/googleaitech):")
+        for u in updates[:6]:
+            print(f"   • [{u.get('category')}] {u.get('title')} — {u.get('url')}")
+        print("   Full deck: https://g.dev/ai/googleaitech")
+
+    print(f"\n🏆 Your Antigravity Mastery: {len(unlocked)}/{len(catalog) or 12} power features unlocked")
+    unseen_next = [c["command"] for c in catalog if c["id"] not in unlocked and env["surface_key"] in c.get("surfaces", [])][:3]
+    if unseen_next:
+        print(f"   Try next: {', '.join(unseen_next)}")
+    print("=" * 68)
 
 
 def cmd_init(override_mode: str = None, as_json: bool = False):
@@ -458,9 +592,13 @@ def main():
     parser.add_argument("--scan", action="store_true", help="Scan workspace and recommend official Google skills")
     parser.add_argument("--path", type=str, help="Optional workspace directory to scan")
     parser.add_argument("--install", action="store_true", help="When combined with --scan, installs missing recommended skills")
-    parser.add_argument("--mode", type=str, choices=["web", "desktop", "cloud"], help="Override detected environment mode for testing")
+    parser.add_argument("--mode", type=str, choices=["web", "desktop", "cloud"], help="Override detected environment mode")
     parser.add_argument("--persona", type=str, help="Set persona (developer or builder)")
     parser.add_argument("--install-skill", dest="install_skill", type=str, help="Install official Google skill or track")
+    parser.add_argument("--whats-new", dest="whats_new", action="store_true", help="Show latest Antigravity & Google AI updates")
+    parser.add_argument("--tip", action="store_true", help="Show a smart, non-repeating Antigravity Educator tip")
+    parser.add_argument("--context", type=str, help="Contextual trigger for --tip (e.g. refactor, side_question, brainstorm, long_thread, debug, frontend)")
+    parser.add_argument("--unlock", type=str, help="Record adoption of an Antigravity power feature (e.g. swarm, btw, teamwork)")
     parser.add_argument("--json", action="store_true", help="Output structured JSON")
     args = parser.parse_args()
 
@@ -475,6 +613,12 @@ def main():
                 install_single_skill(sk)
         else:
             install_single_skill(target)
+    elif args.whats_new:
+        cmd_whats_new(override_mode=args.mode, as_json=args.json)
+    elif args.tip:
+        cmd_tip(context_topic=args.context, override_mode=args.mode, as_json=args.json)
+    elif args.unlock:
+        cmd_unlock(args.unlock)
     else:
         cmd_init(override_mode=args.mode, as_json=args.json)
 

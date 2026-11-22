@@ -3,7 +3,7 @@ name: skills-companion
 description: Universal Skills Companion for Google Antigravity (Desktop, CLI, IDE, and Web at antigravity.google.com). Automatically detects Web vs. Desktop vs. Agent Platform, scans workspaces in 5 seconds to install verified Official Google Agent Skills (github.com/google/skills), coaches on new Antigravity features (/swarm, /btw, /teamwork, /grill-me, /compact), syncs latest Google AI updates (g.dev/ai/googleaitech), and generates shareable LinkedIn Builder Cards.
 ---
 
-# Skills Companion for Google Antigravity (v1.1.0)
+# Skills Companion for Google Antigravity (v1.2.0)
 
 ## 1. Smart Environment & Plan Detection
 Run `python3 ~/.gemini/config/skills/skills-companion/scripts/companion.py --init --json` (on Desktop/CLI/Remote with shell) or evaluate context directly on Web to activate the exact right capability profile:
@@ -40,9 +40,17 @@ When a user launches `https://g.dev/ai/agentskills`, ALWAYS call `ask_question` 
    - `📡 Show me the latest Google AI launches (g.dev/ai/googleaitech)`
    - `🏆 Generate my Antigravity Builder Card for LinkedIn`
 
-## 5. CLI Commands (Desktop / Terminal)
+## 5. Live Educator & Google AI Tech Radar (Auto-Synced Daily)
+Lightweight (<4 KB) auto-synced feeds work on both Desktop and Antigravity Web:
+- Antigravity Changelog JSON: `https://raw.githubusercontent.com/gdgworkshop/skills/main/references/antigravity_changelog.json`
+- Latest Google AI Tech (`g.dev/ai/googleaitech`) JSON: `https://raw.githubusercontent.com/gdgworkshop/skills/main/references/google_ai_updates.json`
+- Curated Power-Feature Educator Catalog: `https://raw.githubusercontent.com/gdgworkshop/skills/main/references/educator_catalog.json`
+
+## 6. CLI Commands (Desktop / Terminal)
 - Detect environment + scan workspace: `python3 ~/.gemini/config/skills/skills-companion/scripts/companion.py --init`
 - Scan & auto-install missing official skills for current repo: `python3 ~/.gemini/config/skills/skills-companion/scripts/companion.py --scan --install`
-- Test any environment mode explicitly: `python3 ~/.gemini/config/skills/skills-companion/scripts/companion.py --init --mode <web|desktop|cloud>`
+- Show latest Antigravity releases + `g.dev/ai/googleaitech` highlights + Mastery score: `python3 ~/.gemini/config/skills/skills-companion/scripts/companion.py --whats-new`
+- Get a smart contextual or non-repeating Educator tip: `python3 ~/.gemini/config/skills/skills-companion/scripts/companion.py --tip [--context refactor|side_question|brainstorm|long_thread|debug|frontend]`
+- Record feature adoption (logs Mastery + GA4 telemetry): `python3 ~/.gemini/config/skills/skills-companion/scripts/companion.py --unlock <swarm|btw|teamwork|grill_me|compact|boost|browser>`
 - Save persona: `python3 ~/.gemini/config/skills/skills-companion/scripts/companion.py --persona <developer|builder>`
 - Install a specific skill or track (`ai`, `backend`, `cloud`, `mobile`, `android`): `python3 ~/.gemini/config/skills/skills-companion/scripts/companion.py --install-skill <name_or_track>`

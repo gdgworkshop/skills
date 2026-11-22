@@ -20,6 +20,9 @@ mkdir -p "$SKILL_DIR/scripts" "$SKILL_DIR/references" "$RULES_DIR"
 curl -fsSL "$REPO_RAW/SKILL.md" -o "$SKILL_DIR/SKILL.md"
 curl -fsSL "$REPO_RAW/VERSION" -o "$SKILL_DIR/VERSION"
 curl -fsSL "$REPO_RAW/scripts/companion.py" -o "$SKILL_DIR/scripts/companion.py"
+curl -fsSL "$REPO_RAW/references/educator_catalog.json" -o "$SKILL_DIR/references/educator_catalog.json"
+curl -fsSL "$REPO_RAW/references/antigravity_changelog.json" -o "$SKILL_DIR/references/antigravity_changelog.json"
+curl -fsSL "$REPO_RAW/references/google_ai_updates.json" -o "$SKILL_DIR/references/google_ai_updates.json"
 chmod +x "$SKILL_DIR/scripts/companion.py"
 
 cat <<'EOF' > "$RULES_DIR/skills-companion.md"
@@ -39,8 +42,14 @@ cat <<'EOF' > "$RULES_DIR/skills-companion.md"
    - When asked to scan a project or when opening a workspace containing `firebase.json`, `pubspec.yaml`, `package.json`, `requirements.txt`, `Dockerfile`, or `build.gradle.kts`, run:
      `python3 ~/.gemini/config/skills/skills-companion/scripts/companion.py --scan`
      (or `--scan --install` when the user confirms) and surface matching official Marketplace `<plugin-card>` recommendations when on Desktop.
-4. **Non-Spammy Antigravity Feature Coaching:**
-   - Suggest relevant Antigravity features at the exact moment they help: `/btw` for quick side questions without interrupting long tasks, `/swarm` or `/teamwork` for parallel multi-file work, `/grill-me` for clarifying vague app ideas, `/compact` when threads exceed ~25 turns, and `/browser` for live web app verification.
+4. **Live Antigravity Educator & Google AI Tech Radar (Smart, Non-Spammy Cadence):**
+   - When the user asks *"What's new in Antigravity?"* or *"What's new in Google AI?"*, run:
+     `python3 ~/.gemini/config/skills/skills-companion/scripts/companion.py --whats-new`
+     and present the latest Antigravity release + `g.dev/ai/googleaitech` highlights cleanly.
+   - **Smart Tip Cadence (Avoid Banner Blindness):** Do NOT append a tip after every single tiny prompt. Instead:
+     - **Immediate Contextual Trigger:** Append a 1-line tip from `companion.py --tip --context <topic>` when the moment genuinely matches (`refactor` → `/swarm`, `side_question` → `/btw`, `brainstorm` → `/grill-me`, `long_thread` → `/compact`, `debug` → `/boost`, `frontend` → `/browser`).
+     - **Discovery Spotlight:** Otherwise, surface 1 fresh, non-repeating tip on Turn #1 of a new chat and roughly every 3–4 turns via `companion.py --tip`.
+   - **Adoption Tracking:** Whenever the user invokes an Antigravity power feature (`/swarm`, `/btw`, `/teamwork`, `/grill-me`, `/compact`, `/boost`, `/browser`, `/learn`, `/automation`), quietly log mastery via `companion.py --unlock <feature_id>`.
 EOF
 
 # Anonymous install telemetry (respects DO_NOT_TRACK=1)

@@ -1,0 +1,110 @@
+[
+  {
+    "id": "swarm",
+    "command": "/swarm",
+    "title": "Agent Swarms (Parallel Team + Verifier)",
+    "contexts": ["refactor", "multi_file", "large_feature", "testing"],
+    "surfaces": ["desktop", "cloud"],
+    "builder": "🐝 **Antigravity Tip (`/swarm`):** Building multiple parts at once? Type `/swarm` to spin up a team of named AI workers plus a built-in verifier who tests everything on a shared board!",
+    "developer": "🐝 **Antigravity Tip (`/swarm`):** Split multi-file refactors or feature + test suites across parallel named workers + `@verifier` coordinating on a live shared board."
+  },
+  {
+    "id": "btw",
+    "command": "/btw",
+    "title": "Side Questions (/btw)",
+    "contexts": ["side_question", "quick_check", "long_task"],
+    "surfaces": ["desktop", "cloud", "web"],
+    "builder": "💬 **Antigravity Tip (`/btw`):** Have a quick question while the AI is busy building? Type `/btw` to ask on the side without interrupting your build or cluttering your main chat!",
+    "developer": "💬 **Antigravity Tip (`/btw`):** Ask code-aware, read-only Side Questions in parallel while long tasks run—keeps main conversation context clean (or press `Cmd+E` on selected terminal output)."
+  },
+  {
+    "id": "teamwork",
+    "command": "/teamwork",
+    "title": "Autonomous Agent Teamwork",
+    "contexts": ["large_feature", "research", "multi_file"],
+    "surfaces": ["desktop", "cloud", "web"],
+    "builder": "🤝 **Antigravity Tip (`/teamwork`):** Tackling a big project? Type `/teamwork` so specialized AI teammates can research, design, and code side-by-side!",
+    "developer": "🤝 **Antigravity Tip (`/teamwork`):** Delegate parallel subagent worktrees without polluting your primary context window."
+  },
+  {
+    "id": "grill_me",
+    "command": "/grill-me",
+    "title": "Interactive Idea Interview (/grill-me)",
+    "contexts": ["brainstorm", "vague_idea", "planning"],
+    "surfaces": ["desktop", "cloud", "web"],
+    "builder": "✨ **Antigravity Tip (`/grill-me`):** Not 100% sure how your app should work yet? Type `/grill-me` and the AI will interview you step-by-step to turn your rough idea into a crisp plan!",
+    "developer": "✨ **Antigravity Tip (`/grill-me`):** Run `/grill-me` before coding to resolve architectural ambiguities upfront and eliminate expensive refactoring loops."
+  },
+  {
+    "id": "compact",
+    "command": "/compact",
+    "title": "Context Hygiene (/compact)",
+    "contexts": ["long_thread", "sluggish", "quota"],
+    "surfaces": ["desktop", "cloud", "web"],
+    "builder": "🧹 **Antigravity Tip (`/compact`):** Long chat getting slow? Type `/compact` to neatly summarize earlier messages—it keeps your progress while cutting memory clutter by ~70%!",
+    "developer": "🧹 **Antigravity Tip (`/compact`):** Around 20–25+ turns, run `/compact` to compress history, prevent context rot, and preserve model quota."
+  },
+  {
+    "id": "boost",
+    "command": "/boost",
+    "title": "Deep Reasoning & Verification (/boost)",
+    "contexts": ["debug", "complex_bug", "architecture"],
+    "surfaces": ["desktop", "cloud", "web"],
+    "builder": "🧠 **Antigravity Tip (`/boost`):** Stuck on a tricky bug? Type `/boost` to give the AI extra deep-thinking power to double-check every angle before fixing it!",
+    "developer": "🧠 **Antigravity Tip (`/boost`):** Trigger `/boost` for hard root-cause debugging, multi-perspective design reviews, and rigorous verification."
+  },
+  {
+    "id": "browser",
+    "command": "/browser",
+    "title": "Live Browser Verification (/browser)",
+    "contexts": ["frontend", "ui", "web_app"],
+    "surfaces": ["desktop", "cloud"],
+    "builder": "🌐 **Antigravity Tip (`/browser`):** Want the AI to actually *see* and click through your web app? Type `/browser` to visually test your live UI!",
+    "developer": "🌐 **Antigravity Tip (`/browser`):** Verify live DOM state, responsive layouts, and interactive user flows directly inside Antigravity's built-in browser."
+  },
+  {
+    "id": "plan",
+    "command": "/plan",
+    "title": "Step-by-Step Planning (/plan)",
+    "contexts": ["planning", "brainstorm"],
+    "surfaces": ["desktop", "cloud", "web"],
+    "builder": "🗺️ **Antigravity Tip (`/plan`):** Before diving into a big change, type `/plan` to review a simple, visual blueprint first so there are zero surprises!",
+    "developer": "🗺️ **Antigravity Tip (`/plan`):** Generate an executable implementation plan artifact to review diffs and edge cases before any files are mutated."
+  },
+  {
+    "id": "learn",
+    "command": "/learn",
+    "title": "Persistent Memory (/learn)",
+    "contexts": ["setup", "correction", "tooling"],
+    "surfaces": ["desktop", "cloud"],
+    "builder": "🎓 **Antigravity Tip (`/learn`):** Just taught the AI how you like things set up? Type `/learn` so it remembers that preference forever across future projects!",
+    "developer": "🎓 **Antigravity Tip (`/learn`):** Persist non-standard project setups, lint fixes, or agent corrections as reusable rules for future conversations."
+  },
+  {
+    "id": "mcp_apps",
+    "command": "MCP Apps",
+    "title": "Interactive MCP Apps & Marketplace",
+    "contexts": ["ui", "plugins", "integrations"],
+    "surfaces": ["desktop", "cloud", "web"],
+    "builder": "🛒 **Antigravity Tip (MCP Apps & Marketplace):** Connect Google Cloud, Firebase, Canva, or Figma with 1 click—now with interactive visual apps rendered right inside chat!",
+    "developer": "🛒 **Antigravity Tip (MCP Apps & Marketplace):** Install verified namespaced plugins via `/plugin` or build MCP tools that render interactive HTML UI directly in chat & side panels."
+  },
+  {
+    "id": "automation",
+    "command": "/automation",
+    "title": "Scheduled Background Automations",
+    "contexts": ["schedule", "recurring", "monitoring"],
+    "surfaces": ["desktop", "cloud"],
+    "builder": "⏰ **Antigravity Tip (`/automation`):** Want recurring help like daily repo digests or morning summaries? Type `/automation` to put Antigravity on autopilot!",
+    "developer": "⏰ **Antigravity Tip (`/automation`):** Configure recurring cron jobs and delayed triggers with reactive wakeups via `/automation` or `/schedule`."
+  },
+  {
+    "id": "remote_agents",
+    "command": "antigravity.google.com",
+    "title": "Remote Agents on Web & Mobile",
+    "contexts": ["mobile", "remote", "async"],
+    "surfaces": ["desktop", "cloud", "web"],
+    "builder": "☁️ **Antigravity Tip (Antigravity Web):** Keep coding from any browser or phone at `antigravity.google.com`—Remote Agents keep running your tasks even when your laptop is closed!",
+    "developer": "☁️ **Antigravity Tip (Remote Agents):** Launch isolated cloud-hosted agent sessions from `antigravity.google.com` or connect back to your local machine via Remote Control."
+  }
+]

@@ -1,0 +1,38 @@
+{
+  "source": "https://antigravity.google/docs/changelog",
+  "synced_at": "2026-11-22T05:47:40.806682+00:00",
+  "releases": [
+    {
+      "version": "v2.34.0",
+      "date": "November 20, 2026",
+      "headline": "Gemini 4 Neon, MCP Apps, and more",
+      "highlights": [
+        "Gemini 4 Neon and Orchestrator (Neon) are now available for eligible paid consumer plans, and Gemini 4 Neon is available with Gemini API keys and Application Default Credentials. Enterprise and Application Default Credentials accounts also now support the Orchestrator.",
+        "You can now choose whether Enter or Ctrl+Enter (Cmd+Enter on macOS) sends messages under Settings > General > Input Box.",
+        "You can now start a side question directly from selected output in the integrated terminal using Cmd+E (Ctrl+E on Windows and Linux) or the selection popup.",
+        "Diff views now use a single-column line-number gutter with color-coded change strips, giving code more horizontal room before wrapping.",
+        "You can now drag conversation tabs from the side panel directly into the message box to reference them in a prompt."
+      ]
+    },
+    {
+      "version": "v2.33.0",
+      "date": "November 17, 2026",
+      "headline": "Connect over SSH and GitHub pull request integration",
+      "highlights": [
+        "You can now connect the Antigravity App to a remote 64-bit Linux machine over SSH from the sidebar, the project menu (SSH Host...), or the command palette (Connect to SSH Host...). Antigravity installs its remote server automatically over OpenSSH using your ~/.ssh/config so projects, Git worktrees, agents, and terminals run on the host and keep working even after you close the window.",
+        "GitHub pull request links in chat and URL artifact cards now render as live status pills with hover cards, alongside a new Pull Requests section in the Overview panel and an optional conversation sidebar indicator.",
+        "Finished /btw side-question answers now include an Insert into main conversation action, and you can start a side question from selected subagent text or promote a subagent tab to Full View when running /btw.",
+        "You can now search within pages in the built-in browser with Cmd/Ctrl+F from either the browser toolbar or the page itself, while web apps with their own search keep handling the shortcut.",
+        "You can now choose the Nord dark theme and matching syntax palette in Settings > Appearance."
+      ]
+    },
+    {
+      "version": "v2.32.2",
+      "date": "November 16, 2026",
+      "headline": "Multi-turn /btw side-question tabs and diagnostic logging fix",
+      "highlights": [
+        "Side questions (/btw) now open in a dedicated Side Question tab in the side panel where you can ask multi-turn follow-up questions and let the agent read files, search your workspace, and run read-only commands without interrupting the main conversation."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "source": "https://g.dev/ai/googleaitech",
+  "handbook": "https://g.dev/ai/build",
+  "synced_at": "2026-11-22T05:47:47.442004+00:00",
+  "updates": [
+    {
+      "category": "Antigravity",
+      "title": "MCP Apps",
+      "url": "https://antigravity.google/docs/mcp-apps"
+    },
+    {
+      "category": "Gemini API",
+      "title": "Semantic Governance Overview",
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/govern/policies/semantic-governance-overview"
+    },
+    {
+      "category": "Google AI",
+      "title": "Check What Your AI Agents Do Before They Do It With Semantic Governance Policies",
+      "url": "https://developers.googleblog.com/check-what-your-ai-agents-do-before-they-do-it-with-semantic-governance-policies"
+    },
+    {
+      "category": "Agent Development Kit (ADK)",
+      "title": "ADK.Dev",
+      "url": "https://adk.dev"
+    },
+    {
+      "category": "Agent Development Kit (ADK)",
+      "title": "Agent Development Kit (ADK) v2.15.0",
+      "url": "https://github.com/google/adk-python/releases/tag/v2.15.0"
+    },
+    {
+      "category": "BigQuery AI",
+      "title": "AI Index Overview",
+      "url": "https://docs.cloud.google.com/bigquery/docs/ai-index-overview"
+    },
+    {
+      "category": "BigQuery AI",
+      "title": "BigQuery AI Release Notes",
+      "url": "https://docs.cloud.google.com/bigquery/docs/release-notes"
+    },
+    {
+      "category": "Gemini API",
+      "title": "Tool Retrieval",
+      "url": "https://aistudio.google.com/docs/tool-retrieval"
+    },
+    {
+      "category": "Gemini API",
+      "title": "Gemini API Tool Retrieval",
+      "url": "https://blog.google/innovation-and-ai/technology/developers-tools/gemini-api-tool-retrieval"
+    },
+    {
+      "category": "Gemini API",
+      "title": "Genie",
+      "url": "https://aistudio.google.com/docs/genie"
+    },
+    {
+      "category": "Gemini API",
+      "title": "Genie 4 In Gemini API",
+      "url": "https://blog.google/innovation-and-ai/technology/developers-tools/genie-4-in-gemini-api"
+    },
+    {
+      "category": "Gemini API",
+      "title": "Gemini 4 Neon",
+      "url": "https://aistudio.google.com/docs/models/gemini-4-neon"
+    },
+    {
+      "category": "Gemini API",
+      "title": "Introducing Gemini 4 Neon",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-neon"
+    },
+    {
+      "category": "Google Labs",
+      "title": "Waitlist",
+      "url": "https://stitch.google.com/loop/waitlist"
+    },
+    {
+      "category": "Google Labs",
+      "title": "Stitch Loop",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/google-labs/stitch-loop"
+    }
+  ]
+}
