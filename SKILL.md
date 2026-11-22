@@ -3,15 +3,15 @@ name: skills-companion
 description: Universal Skills Companion for Google Antigravity (Desktop, CLI, IDE, and Web at antigravity.google.com). Automatically detects Web vs. Desktop vs. Agent Platform, scans workspaces in 5 seconds to install verified Official Google Agent Skills (github.com/google/skills), coaches on new Antigravity features (/swarm, /btw, /teamwork, /grill-me, /compact), syncs latest Google AI updates (g.dev/ai/googleaitech), and generates shareable LinkedIn Builder Cards.
 ---
 
-# Skills Companion for Google Antigravity (v1.3.1)
+# Skills Companion for Google Antigravity (v1.3.2)
 
 ## 1. Smart Environment & Plan Detection
 Run `python3 ~/.gemini/config/skills/skills-companion/scripts/companion.py --init --json` (on Desktop/CLI/Remote with shell) or evaluate context directly on Web to activate the exact right capability profile:
 
 | Mode | When Active | Enabled | Auto-Disabled |
 | :--- | :--- | :--- | :--- |
-| **`antigravity_web`** | Running on `antigravity.google.com` Remote Agent (personal Pro/Ultra) | Official Google Skills Hub, Stack Auto-Scan, Live Educator, Dual-Mode Gemini SDK, LinkedIn Builder Card | `$5` voucher setup, dollar/token receipts, local OS browser openers (`open` / `start`) |
-| **`desktop_personal`** | Desktop App / CLI / IDE on Personal Pro, Ultra, or Free | Everything in Web **+** Local skill install, Quota awareness, Marketplace `<plugin-card>` nudges | `$5` voucher setup, dollar/token billing receipts |
+| **`antigravity_web`** | Running on `antigravity.google.com` Remote Agent (personal Pro/Ultra) | Official Google Skills Hub, Stack Auto-Scan, Live Educator, Dual-Mode Gemini SDK, LinkedIn Builder Card | `$5` voucher option, dollar/token receipts, local OS browser openers (`open` / `start`) |
+| **`desktop_personal`** | Desktop App / CLI / IDE on Personal Pro, Ultra, or Free | Everything in Web **+** Local skill install, Quota awareness, Marketplace `<plugin-card>` nudges, **On-Demand `$5` Event Credit Bridge (Q2 option)** | Automatic dollar/token billing receipts |
 | **`agent_platform`** | Google Cloud Agent Platform / Vertex AI / Active Workshop Grant | Everything in Desktop **+** Vertex AI Project ID auto-injection, live token visibility (`g.dev/ai/workshop`) | *(All capabilities enabled)* |
 
 ## 2. Zero-Install Web Mode (`antigravity.google.com`)

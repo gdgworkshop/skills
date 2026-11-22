@@ -30,11 +30,12 @@ cat <<'EOF' > "$RULES_DIR/skills-companion.md"
 
 1. **Smart Environment-Aware Mode Detection (Desktop vs. Web vs. Agent Platform):**
    - Run `python3 ~/.gemini/config/skills/skills-companion/scripts/companion.py --init --json` when checking environment or onboarding.
-   - **On Antigravity Web (`antigravity.google.com`) & Personal Google AI Pro / Ultra / Free (`mode: antigravity_web` or `desktop_personal`):** NEVER display dollar-billed token receipts, `$5` workshop credit steps, or local OS browser launchers (`open -g`). Focus 100% on **Official Google Agent Skills**, **Workspace Stack Auto-Detection**, and **Antigravity Feature Coaching**.
-   - **On Agent Platform / GCP (`mode: agent_platform`):** Enable Vertex AI Project ID injection and link to `g.dev/ai/workshop` if the user asks about `$5` workshop credits/tokens.
+   - **On Antigravity Web (`mode: antigravity_web` at `antigravity.google.com`):** NEVER display dollar-billed token receipts, `$5` event credit options, or local OS browser launchers (`open -g`). Focus 100% on **Official Google Agent Skills**, **Workspace Stack Auto-Detection**, and **Antigravity Feature Coaching**.
+   - **On Desktop / CLI / IDE Personal Plan (`mode: desktop_personal`):** NEVER display automatic dollar-billed token receipts during normal chat—focus on Skills & Educator. **However, ALWAYS include the optional `🎟️ I'm at an event / workshop — activate my $5 Google Cloud credit` choice in First-Launch Question 2**, and run `--event-credit` on demand if selected or if a credit link is pasted!
+   - **On Agent Platform / GCP (`mode: agent_platform`):** Enable Vertex AI Project ID injection and live token visibility (`g.dev/ai/workshop`).
    - **Zero-Install Web Fallback:** If `~/.gemini/config/skills/skills-companion` is unavailable in a remote web session, scan the workspace directly and fetch needed official `SKILL.md` blueprints from `github.com/google/skills` into session context.
 2. **Interactive First-Launch Onboarding (`g.dev/ai/agentskills`):**
-   - When the user pastes `https://g.dev/ai/agentskills` or asks to launch their Skills Companion, ALWAYS call `ask_question` in the same turn with 2 questions:
+   - When the user pastes `https://g.dev/ai/agentskills` or asks to launch their Skills Companion, first refresh to the latest version (`curl -fsSL https://raw.githubusercontent.com/gdgworkshop/skills/main/install.sh | bash && python3 ~/.gemini/config/skills/skills-companion/scripts/companion.py --init`), then ALWAYS call `ask_question` in the same turn with 2 questions:
      - Q1: Persona (`💻 Pro Developer` vs `👷 Vibe Coder / Builder`)
      - Q2: First action:
        - `(Recommended) 🔍 Scan my project & install the best official Google Agent Skills`

@@ -19,7 +19,7 @@ import uuid
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-VERSION = "1.3.1"
+VERSION = "1.3.2"
 CARD_STUDIO_URL = "https://gdgworkshop.github.io/skills/card.html"
 WORKSHOP_INSTALLER_URL = "https://raw.githubusercontent.com/gdgworkshop/tokenmaxxing/main/install.sh"
 WORKSHOP_SCRIPT_PATH = Path.home() / ".gemini" / "config" / "skills" / "tokenmaxxing" / "scripts" / "tokenmaxx.py"
