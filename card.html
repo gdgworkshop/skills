@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Antigravity Builder Card — Skills Companion</title>
+  <meta name="description" content="Create and download your 1200x630 LinkedIn-ready Google Antigravity Builder Card showcasing your unlocked superpowers and official Google Agent Skills." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏆</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@500;700&family=Google+Sans+Mono:wght@500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #070b14;
+      --panel: rgba(18, 24, 42, 0.78);
+      --border: rgba(255, 255, 255, 0.1);
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --blue: #38bdf8;
+      --gblue: #4285F4;
+      --green: #34d399;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      padding: 28px 20px 64px;
+      position: relative;
+      overflow-x: hidden;
+    }
+    .glow-a {
+      position: fixed; top: -180px; left: 30%; width: 620px; height: 620px;
+      background: radial-gradient(circle, rgba(66,133,244,0.2) 0%, rgba(7,11,20,0) 70%);
+      pointer-events: none; z-index: 0;
+    }
+    .glow-b {
+      position: fixed; bottom: -200px; right: -80px; width: 520px; height: 520px;
+      background: radial-gradient(circle, rgba(52,211,153,0.14) 0%, rgba(7,11,20,0) 70%);
+      pointer-events: none; z-index: 0;
+    }
+    .wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+    .brand {
+      display: flex; align-items: center; gap: 10px;
+      font-family: 'Google Sans', 'Inter', sans-serif;
+      font-size: 1.15rem; font-weight: 700; color: #fff; text-decoration: none;
+    }
+    .dots { display: inline-flex; gap: 4px; }
+    .dots span { width: 7px; height: 7px; border-radius: 50%; }
+    .back-link {
+      font-size: 0.86rem; color: var(--blue); text-decoration: none;
+      background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.28);
+      padding: 6px 14px; border-radius: 9999px;
+    }
+    .back-link:hover { background: rgba(56,189,248,0.18); }
+
+    .preview-shell {
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.14);
+      box-shadow: 0 24px 70px rgba(0,0,0,0.6), 0 0 50px rgba(56,189,248,0.12);
+      margin-bottom: 22px;
+      background: #090d16;
+    }
+    canvas { width: 100%; height: auto; display: block; }
+
+    .actions-row {
+      display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 26px;
+    }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 12px 20px; border-radius: 12px; font-size: 0.92rem; font-weight: 600;
+      border: 1px solid transparent; cursor: pointer; font-family: inherit;
+      text-decoration: none; transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary {
+      background: linear-gradient(135deg, #4285F4 0%, #2563eb 100%);
+      color: #fff; box-shadow: 0 8px 24px rgba(66,133,244,0.35);
+      flex: 1; min-width: 220px;
+    }
+    .btn-secondary {
+      background: var(--panel); border-color: var(--border); color: #e2e8f0;
+      flex: 1; min-width: 190px;
+    }
+    .btn-secondary:hover { border-color: rgba(56,189,248,0.45); color: #fff; }
+    .btn-linkedin {
+      background: linear-gradient(135deg, #0a66c2 0%, #004182 100%);
+      color: #fff; flex: 1; min-width: 190px;
+    }
+
+    .editor-panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px;
+      backdrop-filter: blur(16px);
+    }
+    .editor-title {
+      font-family: 'Google Sans', 'Inter', sans-serif;
+      font-size: 1.05rem; font-weight: 700; margin-bottom: 16px; color: #f8fafc;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .field label {
+      display: block; font-size: 0.8rem; color: var(--muted); margin-bottom: 6px; font-weight: 500;
+    }
+    .field input, .field select {
+      width: 100%; padding: 10px 12px; border-radius: 10px;
+      background: rgba(7,11,20,0.85); border: 1px solid rgba(255,255,255,0.14);
+      color: #fff; font-size: 0.9rem; font-family: inherit;
+    }
+    .field input:focus, .field select:focus {
+      outline: none; border-color: var(--blue);
+    }
+    .chips-group { margin-bottom: 16px; }
+    .chips-group-label {
+      font-size: 0.8rem; font-weight: 600; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 8px;
+    }
+    .chips-wrap { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip-btn {
+      padding: 6px 12px; border-radius: 9999px; font-size: 0.82rem; font-weight: 500;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12);
+      color: var(--muted); cursor: pointer; font-family: inherit; transition: all 0.15s ease;
+    }
+    .chip-btn.active-blue {
+      background: rgba(56,189,248,0.18); border-color: rgba(56,189,248,0.6); color: #e0f2fe;
+    }
+    .chip-btn.active-green {
+      background: rgba(52,211,153,0.18); border-color: rgba(52,211,153,0.6); color: #d1fae5;
+    }
+    footer {
+      text-align: center; margin-top: 28px; font-size: 0.82rem; color: var(--muted);
+    }
+    footer a { color: var(--blue); text-decoration: none; }
+  </style>
+
+  <!-- Shared GA4 Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J90GTZJF9E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-J90GTZJF9E');
+    gtag('event', 'builder_card_opened', { 'entry_surface': 'agentskills' });
+  </script>
+</head>
+<body>
+  <div class="glow-a"></div>
+  <div class="glow-b"></div>
+
+  <div class="wrap">
+    <div class="topbar">
+      <a class="brand" href="./">
+        <span class="dots">
+          <span style="background:#4285F4"></span>
+          <span style="background:#EA4335"></span>
+          <span style="background:#FBBC05"></span>
+          <span style="background:#34A853"></span>
+        </span>
+        Antigravity Builder Card Studio
+      </a>
+      <a class="back-link" href="./">← Skills Companion (g.dev/ai/agentskills)</a>
+    </div>
+
+    <!-- Live 1200x630 Midnight Aurora Glassmorphism Canvas -->
+    <div class="preview-shell">
+      <canvas id="card-canvas" width="2400" height="1260"></canvas>
+    </div>
+
+    <!-- Primary Export & Share Actions -->
+    <div class="actions-row">
+      <button class="btn btn-primary" onclick="downloadPng()">
+        ⬇️ Download HD PNG (1200×630)
+      </button>
+      <button class="btn btn-secondary" id="copy-caption-btn" onclick="copyCaption()">
+        📋 Copy LinkedIn Post Caption
+      </button>
+      <button class="btn btn-linkedin" onclick="shareLinkedIn()">
+        🔗 Share on LinkedIn
+      </button>
+    </div>
+
+    <!-- Live Customization Panel -->
+    <div class="editor-panel">
+      <div class="editor-title">✨ Customize Your Builder Card</div>
+      <div class="form-grid">
+        <div class="field">
+          <label for="inp-name">Your Name</label>
+          <input id="inp-name" type="text" placeholder="Your Name" value="Antigravity Builder" oninput="draw()" />
+        </div>
+        <div class="field">
+          <label for="inp-project">Project or Milestone Highlight</label>
+          <input id="inp-project" type="text" placeholder="e.g. Shipped AI App on Cloud Run" value="Building with Google Antigravity" oninput="draw()" />
+        </div>
+        <div class="field">
+          <label for="inp-persona">Card Persona / Mode</label>
+          <select id="inp-persona" onchange="draw()">
+            <option value="developer">💻 Pro Developer</option>
+            <option value="builder">👷 Vibe Coder / Builder</option>
+            <option value="workshop">🎓 GDG Workshop Builder</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="chips-group">
+        <div class="chips-group-label">⚡ Antigravity Superpowers Unlocked (Click to toggle)</div>
+        <div class="chips-wrap" id="feature-chips"></div>
+      </div>
+
+      <div class="chips-group" style="margin-bottom:0;">
+        <div class="chips-group-label">🧩 Official Google Agent Skills Active (Click to toggle)</div>
+        <div class="chips-wrap" id="skill-chips"></div>
+      </div>
+    </div>
+
+    <footer>
+      Powered by <a href="https://g.dev/ai/agentskills" target="_blank" rel="noopener">Skills Companion for Google Antigravity</a> • 100% client-side PNG export (zero data uploaded)
+    </footer>
+  </div>
+
+  <script>
+    const ALL_FEATURES = [
+      { id: 'swarm', label: '/swarm' },
+      { id: 'btw', label: '/btw' },
+      { id: 'teamwork', label: '/teamwork' },
+      { id: 'grill_me', label: '/grill-me' },
+      { id: 'boost', label: '/boost' },
+      { id: 'compact', label: '/compact' },
+      { id: 'browser', label: '/browser' },
+      { id: 'plan', label: '/plan' },
+      { id: 'learn', label: '/learn' },
+      { id: 'mcp_apps', label: 'MCP Apps' },
+      { id: 'automation', label: '/automation' },
+      { id: 'remote_agents', label: 'Remote Agents' }
+    ];
+
+    const ALL_SKILLS = [
+      { id: 'gemini-api', label: 'Gemini API' },
+      { id: 'gemini-live-api', label: 'Gemini Live API' },
+      { id: 'firebase-basics', label: 'Firebase' },
+      { id: 'firebase-firestore', label: 'Firestore' },
+      { id: 'cloud-run-basics', label: 'Cloud Run' },
+      { id: 'flutter-apply-architecture-best-practices', label: 'Flutter' },
+      { id: 'jetpack-compose-performance', label: 'Android Compose' },
+      { id: 'gcloud', label: 'Google Cloud CLI' }
+    ];
+
+    let selectedFeatures = new Set(['swarm', 'btw', 'grill_me', 'mcp_apps']);
+    let selectedSkills = new Set(['gemini-api', 'firebase-basics', 'cloud-run-basics']);
+
+    function hydrateFromQuery() {
+      const q = new URLSearchParams(window.location.search);
+      if (q.get('name')) document.getElementById('inp-name').value = q.get('name');
+      if (q.get('project')) document.getElementById('inp-project').value = q.get('project');
+      if (q.get('persona')) {
+        const p = q.get('persona').toLowerCase();
+        if (p.includes('build') || p.includes('vibe')) document.getElementById('inp-persona').value = 'builder';
+        else if (p.includes('work') || p.includes('gdg')) document.getElementById('inp-persona').value = 'workshop';
+        else document.getElementById('inp-persona').value = 'developer';
+      }
+      if (q.get('features')) {
+        const parsed = q.get('features').split(',').map(s => s.trim().toLowerCase()).filter(Boolean);
+        if (parsed.length) selectedFeatures = new Set(parsed);
+      }
+      if (q.get('skills')) {
+        const parsed = q.get('skills').split(',').map(s => s.trim().toLowerCase()).filter(Boolean);
+        if (parsed.length) selectedSkills = new Set(parsed);
+      }
+    }
+
+    function renderChips() {
+      const fWrap = document.getElementById('feature-chips');
+      fWrap.innerHTML = '';
+      ALL_FEATURES.forEach(f => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'chip-btn' + (selectedFeatures.has(f.id) ? ' active-blue' : '');
+        btn.textContent = f.label;
+        btn.onclick = () => {
+          if (selectedFeatures.has(f.id)) selectedFeatures.delete(f.id);
+          else selectedFeatures.add(f.id);
+          renderChips();
+          draw();
+        };
+        fWrap.appendChild(btn);
+      });
+
+      const sWrap = document.getElementById('skill-chips');
+      sWrap.innerHTML = '';
+      ALL_SKILLS.forEach(s => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'chip-btn' + (selectedSkills.has(s.id) ? ' active-green' : '');
+        btn.textContent = s.label;
+        btn.onclick = () => {
+          if (selectedSkills.has(s.id)) selectedSkills.delete(s.id);
+          else selectedSkills.add(s.id);
+          renderChips();
+          draw();
+        };
+        sWrap.appendChild(btn);
+      });
+    }
+
+    function roundRect(ctx, x, y, w, h, r) {
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.arcTo(x + w, y, x + w, y + h, r);
+      ctx.arcTo(x + w, y + h, x, y + h, r);
+      ctx.arcTo(x, y + h, x, y, r);
+      ctx.arcTo(x, y, x + w, y, r);
+      ctx.closePath();
+    }
+
+    function drawPills(ctx, labels, startX, startY, maxW, style) {
+      let x = startX;
+      let y = startY;
+      ctx.font = style.font;
+      const h = 38;
+      const padX = 16;
+      const gapX = 10;
+      const gapY = 12;
+
+      labels.slice(0, 6).forEach((label, idx) => {
+        const tw = ctx.measureText(label).width;
+        const w = tw + padX * 2;
+        if (x + w > startX + maxW) {
+          x = startX;
+          y += h + gapY;
+        }
+        roundRect(ctx, x, y, w, h, style.radius);
+        ctx.fillStyle = Array.isArray(style.bg) ? style.bg[idx % style.bg.length] : style.bg;
+        ctx.fill();
+        ctx.strokeStyle = Array.isArray(style.border) ? style.border[idx % style.border.length] : style.border;
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+        ctx.fillStyle = Array.isArray(style.fg) ? style.fg[idx % style.fg.length] : style.fg;
+        ctx.textBaseline = 'middle';
+        ctx.fillText(label, x + padX, y + h / 2 + 1);
+        x += w + gapX;
+      });
+    }
+
+    function getActiveLabels() {
+      const fLabels = ALL_FEATURES.filter(f => selectedFeatures.has(f.id)).map(f => f.label);
+      const sLabels = ALL_SKILLS.filter(s => selectedSkills.has(s.id)).map(s => s.label);
+      return {
+        features: fLabels.length ? fLabels : ['/swarm', '/btw'],
+        skills: sLabels.length ? sLabels : ['Gemini API', 'Cloud Run']
+      };
+    }
+
+    function draw() {
+      const canvas = document.getElementById('card-canvas');
+      const ctx = canvas.getContext('2d');
+      // 2x Retina scaling for ultra-sharp 1200x630 logical layout
+      ctx.save();
+      ctx.setTransform(2, 0, 0, 2, 0, 0);
+
+      const W = 1200, H = 630;
+      const name = document.getElementById('inp-name').value.trim() || 'Antigravity Builder';
+      const project = document.getElementById('inp-project').value.trim() || 'Building with Google Antigravity';
+      const modeVal = document.getElementById('inp-persona').value;
+      const active = getActiveLabels();
+
+      const headerTitle = modeVal === 'workshop' ? 'GDG WORKSHOP BUILDER CERTIFICATE' : 'ANTIGRAVITY BUILDER CARD';
+      const roleBadge = modeVal === 'builder' ? 'VIBE CODER' : (modeVal === 'workshop' ? 'GDG WORKSHOP' : 'PRO DEVELOPER');
+      const monthYear = new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' }).toUpperCase();
+
+      // Background base
+      ctx.fillStyle = '#090d16';
+      ctx.fillRect(0, 0, W, H);
+
+      // Signature Midnight Aurora glows
+      const g1 = ctx.createRadialGradient(240, 110, 20, 240, 110, 480);
+      g1.addColorStop(0, 'rgba(66, 133, 244, 0.32)');
+      g1.addColorStop(1, 'rgba(9, 13, 22, 0)');
+      ctx.fillStyle = g1;
+      ctx.fillRect(0, 0, W, H);
+
+      const g2 = ctx.createRadialGradient(990, 510, 20, 990, 510, 430);
+      g2.addColorStop(0, 'rgba(52, 211, 153, 0.24)');
+      g2.addColorStop(1, 'rgba(9, 13, 22, 0)');
+      ctx.fillStyle = g2;
+      ctx.fillRect(0, 0, W, H);
+
+      const g3 = ctx.createRadialGradient(970, 90, 10, 970, 90, 340);
+      g3.addColorStop(0, 'rgba(168, 85, 247, 0.18)');
+      g3.addColorStop(1, 'rgba(9, 13, 22, 0)');
+      ctx.fillStyle = g3;
+      ctx.fillRect(0, 0, W, H);
+
+      // Subtle architectural dot grid
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+      for (let gx = 36; gx < W; gx += 36) {
+        for (let gy = 36; gy < H; gy += 36) {
+          ctx.fillRect(gx, gy, 2, 2);
+        }
+      }
+
+      // Outer glass frame
+      roundRect(ctx, 24, 24, W - 48, H - 48, 28);
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.13)';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Google 4-color dots
+      ['#4285F4', '#EA4335', '#FBBC05', '#34A853'].forEach((c, i) => {
+        ctx.beginPath();
+        ctx.arc(72 + i * 20, 78, 7, 0, Math.PI * 2);
+        ctx.fillStyle = c;
+        ctx.fill();
+      });
+
+      ctx.font = '700 16px "Google Sans", Inter, -apple-system, sans-serif';
+      ctx.fillStyle = '#93c5fd';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(headerTitle, 156, 79);
+
+      // Right Persona + Date Pill
+      const rightText = `${roleBadge}  •  ${monthYear}`;
+      ctx.font = '600 14px Inter, -apple-system, sans-serif';
+      const rw = ctx.measureText(rightText).width + 32;
+      roundRect(ctx, W - 62 - rw, 60, rw, 36, 18);
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.07)';
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.16)';
+      ctx.lineWidth = 1.2;
+      ctx.stroke();
+      ctx.fillStyle = '#e2e8f0';
+      ctx.fillText(rightText, W - 62 - rw + 16, 79);
+
+      // Hero Name (Gradient)
+      const nameGrad = ctx.createLinearGradient(64, 150, 760, 210);
+      nameGrad.addColorStop(0, '#ffffff');
+      nameGrad.addColorStop(0.55, '#bfdbfe');
+      nameGrad.addColorStop(1, '#6ee7b7');
+      ctx.font = '700 62px "Google Sans", Inter, -apple-system, sans-serif';
+      ctx.fillStyle = nameGrad;
+      ctx.fillText(name, 64, 172);
+
+      // Dynamic Subtitle highlighting top features
+      const topFeatStr = active.features.slice(0, 2).join(', ');
+      ctx.font = '500 24px Inter, -apple-system, sans-serif';
+      ctx.fillStyle = '#cbd5e1';
+      ctx.fillText(`Orchestrating AI Agents with ${topFeatStr} & Official Google Skills`, 64, 232);
+
+      // Project Highlight
+      ctx.font = '600 19px Inter, -apple-system, sans-serif';
+      ctx.fillStyle = '#34d399';
+      ctx.fillText('🚀  ' + project, 64, 274);
+
+      // Two Glassmorphic Inner Panels
+      const boxY = 318, boxH = 200, boxW = 524;
+      roundRect(ctx, 64, boxY, boxW, boxH, 20);
+      ctx.fillStyle = 'rgba(20, 28, 48, 0.72)';
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(56, 189, 248, 0.30)';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      const rx = 64 + boxW + 24;
+      roundRect(ctx, rx, boxY, boxW, boxH, 20);
+      ctx.fillStyle = 'rgba(20, 28, 48, 0.72)';
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(52, 211, 153, 0.30)';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      // Left Panel: Antigravity Superpowers
+      ctx.font = '700 15px Inter, -apple-system, sans-serif';
+      ctx.fillStyle = '#38bdf8';
+      ctx.fillText('⚡ ANTIGRAVITY SUPERPOWERS UNLOCKED', 90, boxY + 34);
+
+      ctx.font = '600 14px Inter, -apple-system, sans-serif';
+      ctx.fillStyle = '#94a3b8';
+      const countTxt = `${selectedFeatures.size} / 12 Mastered`;
+      ctx.fillText(countTxt, 64 + boxW - 26 - ctx.measureText(countTxt).width, boxY + 34);
+
+      drawPills(ctx, active.features, 90, boxY + 62, boxW - 52, {
+        font: '600 16px "Google Sans Mono", ui-monospace, monospace',
+        bg: 'rgba(56, 189, 248, 0.14)',
+        border: 'rgba(56, 189, 248, 0.45)',
+        fg: '#e0f2fe',
+        radius: 10
+      });
+
+      // Right Panel: Official Google Skills
+      ctx.font = '700 15px Inter, -apple-system, sans-serif';
+      ctx.fillStyle = '#34d399';
+      ctx.fillText('🧩 OFFICIAL GOOGLE AGENT SKILLS', rx + 26, boxY + 34);
+
+      drawPills(ctx, active.skills, rx + 26, boxY + 62, boxW - 52, {
+        font: '600 16px Inter, -apple-system, sans-serif',
+        bg: ['rgba(66,133,244,0.16)', 'rgba(251,188,5,0.16)', 'rgba(52,168,83,0.16)', 'rgba(56,189,248,0.16)'],
+        border: ['rgba(66,133,244,0.52)', 'rgba(251,188,5,0.52)', 'rgba(52,168,83,0.52)', 'rgba(56,189,248,0.52)'],
+        fg: ['#bfdbfe', '#fef08a', '#bbf7d0', '#bae6fd'],
+        radius: 18
+      });
+
+      // Footer
+      ctx.font = '500 16px Inter, -apple-system, sans-serif';
+      ctx.fillStyle = '#94a3b8';
+      ctx.fillText('Google Antigravity  •  Desktop, CLI & Web (antigravity.google.com)', 64, 566);
+
+      ctx.font = '700 17px "Google Sans Mono", ui-monospace, monospace';
+      ctx.fillStyle = '#38bdf8';
+      const cta = 'Try it → g.dev/ai/agentskills';
+      ctx.fillText(cta, W - 64 - ctx.measureText(cta).width, 566);
+
+      ctx.restore();
+    }
+
+    function buildCaption() {
+      const project = document.getElementById('inp-project').value.trim();
+      const active = getActiveLabels();
+      const fList = active.features.slice(0, 3).join(', ');
+      const sList = active.skills.slice(0, 3).join(', ');
+      return `Excited to level up my workflow in Google Antigravity using ${fList} alongside official Google Agent Skills (${sList}) — ${project}!\n\nTry the Skills Companion in 1 prompt on Desktop or Web: https://g.dev/ai/agentskills\n\n#GoogleAntigravity #VibeCoding #GoogleAI #BuildWithGemini`;
+    }
+
+    function downloadPng() {
+      // Export clean 1200x630 PNG from 2x retina canvas
+      const src = document.getElementById('card-canvas');
+      const out = document.createElement('canvas');
+      out.width = 1200;
+      out.height = 630;
+      const octx = out.getContext('2d');
+      octx.drawImage(src, 0, 0, 1200, 630);
+
+      const link = document.createElement('a');
+      const slug = (document.getElementById('inp-name').value || 'builder').toLowerCase().replace(/[^a-z0-9]+/g, '-');
+      link.download = `antigravity-builder-card-${slug}.png`;
+      link.href = out.toDataURL('image/png');
+      link.click();
+
+      if (typeof gtag === 'function') {
+        gtag('event', 'builder_card_downloaded', {
+          'entry_surface': 'agentskills',
+          'feature_count': selectedFeatures.size,
+          'skill_count': selectedSkills.size
+        });
+      }
+    }
+
+    function copyCaption() {
+      const text = buildCaption();
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.getElementById('copy-caption-btn');
+        btn.textContent = '✓ Copied LinkedIn Post!';
+        setTimeout(() => btn.textContent = '📋 Copy LinkedIn Post Caption', 2200);
+        if (typeof gtag === 'function') {
+          gtag('event', 'builder_card_caption_copied', { 'entry_surface': 'agentskills' });
+        }
+      });
+    }
+
+    function shareLinkedIn() {
+      const text = encodeURIComponent(buildCaption());
+      if (typeof gtag === 'function') {
+        gtag('event', 'builder_card_linkedin_clicked', { 'entry_surface': 'agentskills' });
+      }
+      window.open(`https://www.linkedin.com/feed/?shareActive=true&text=${text}`, '_blank', 'noopener');
+    }
+
+    hydrateFromQuery();
+    renderChips();
+    document.fonts.ready.then(draw);
+    draw();
+  </script>
+</body>
+</html>

@@ -3,7 +3,7 @@ name: skills-companion
 description: Universal Skills Companion for Google Antigravity (Desktop, CLI, IDE, and Web at antigravity.google.com). Automatically detects Web vs. Desktop vs. Agent Platform, scans workspaces in 5 seconds to install verified Official Google Agent Skills (github.com/google/skills), coaches on new Antigravity features (/swarm, /btw, /teamwork, /grill-me, /compact), syncs latest Google AI updates (g.dev/ai/googleaitech), and generates shareable LinkedIn Builder Cards.
 ---
 
-# Skills Companion for Google Antigravity (v1.2.0)
+# Skills Companion for Google Antigravity (v1.3.0)
 
 ## 1. Smart Environment & Plan Detection
 Run `python3 ~/.gemini/config/skills/skills-companion/scripts/companion.py --init --json` (on Desktop/CLI/Remote with shell) or evaluate context directly on Web to activate the exact right capability profile:
@@ -52,5 +52,7 @@ Lightweight (<4 KB) auto-synced feeds work on both Desktop and Antigravity Web:
 - Show latest Antigravity releases + `g.dev/ai/googleaitech` highlights + Mastery score: `python3 ~/.gemini/config/skills/skills-companion/scripts/companion.py --whats-new`
 - Get a smart contextual or non-repeating Educator tip: `python3 ~/.gemini/config/skills/skills-companion/scripts/companion.py --tip [--context refactor|side_question|brainstorm|long_thread|debug|frontend]`
 - Record feature adoption (logs Mastery + GA4 telemetry): `python3 ~/.gemini/config/skills/skills-companion/scripts/companion.py --unlock <swarm|btw|teamwork|grill_me|compact|boost|browser>`
+- Generate LinkedIn Builder Card (Midnight Aurora Glassmorphism, Desktop & Web): `python3 ~/.gemini/config/skills/skills-companion/scripts/companion.py --card --name "<Name>" --project "<Project>"`
+- Direct Web Card Studio (Zero-Install Web Mode): `https://gdgworkshop.github.io/skills/card.html?name=<Name>&project=<Project>&persona=<developer|builder|workshop>&features=swarm,btw,grill_me&skills=gemini-api,firebase-basics,cloud-run-basics`
 - Save persona: `python3 ~/.gemini/config/skills/skills-companion/scripts/companion.py --persona <developer|builder>`
 - Install a specific skill or track (`ai`, `backend`, `cloud`, `mobile`, `android`): `python3 ~/.gemini/config/skills/skills-companion/scripts/companion.py --install-skill <name_or_track>`

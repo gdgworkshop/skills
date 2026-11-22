@@ -12,12 +12,14 @@ import os
 import platform
 import re
 import sys
+import urllib.parse
 import urllib.request
 import uuid
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-VERSION = "1.2.0"
+VERSION = "1.3.0"
+CARD_STUDIO_URL = "https://gdgworkshop.github.io/skills/card.html"
 REPO_RAW = "https://raw.githubusercontent.com/gdgworkshop/skills/main"
 COMPANION_DIR = Path.home() / ".gemini" / "config" / "skills" / "skills-companion"
 LOCAL_REPO_REFS = Path(__file__).resolve().parent.parent / "references"
@@ -576,6 +578,87 @@ def cmd_scan(cwd: str = None, auto_install: bool = False, as_json: bool = False)
         print("\n✨ All recommended official Google skills for this project are already installed!")
 
 
+def cmd_card(name: str = None, project: str = None, override_mode: str = None, as_json: bool = False):
+    env = detect_environment(override_mode)
+    state = load_state()
+
+    if name:
+        state["display_name"] = name.strip()
+        save_state(state)
+
+    display_name = (name or state.get("display_name") or "Antigravity Builder").strip()
+    persona = state.get("persona") or "developer"
+    if env["has_active_workshop"]:
+        persona = "workshop"
+
+    # Combine unlocked features + sensible defaults if brand new
+    unlocked = state.get("unlocked_features") or []
+    features = unlocked if unlocked else ["swarm", "btw", "grill_me"]
+
+    # Combine installed Google skills
+    installed = sorted(get_installed_skills())
+    tracked = state.get("installed_skills") or []
+    skills = sorted(set(installed) | set(tracked))
+    if not skills:
+        skills = ["gemini-api", "firebase-basics", "cloud-run-basics"]
+
+    if not project:
+        cwd_name = Path.cwd().name
+        if cwd_name and cwd_name not in ("", "/", Path.home().name):
+            project = f"Built {cwd_name} with Google Antigravity"
+        else:
+            project = "Building with Google Antigravity"
+
+    query = urllib.parse.urlencode({
+        "name": display_name,
+        "project": project,
+        "persona": persona,
+        "features": ",".join(features[:6]),
+        "skills": ",".join(skills[:6]),
+    })
+    card_url = f"{CARD_STUDIO_URL}?{query}"
+
+    feat_pretty = ", ".join([f"/{f.replace('_', '-')}" if f not in ("mcp_apps", "remote_agents") else f.replace("_", " ").title() for f in features[:3]])
+    caption = (
+        f"Excited to level up my workflow in Google Antigravity using {feat_pretty} "
+        f"alongside official Google Agent Skills — {project}!\n\n"
+        f"Try the Skills Companion in 1 prompt (Desktop & Web): https://g.dev/ai/agentskills\n\n"
+        f"#GoogleAntigravity #VibeCoding #GoogleAI #BuildWithGemini"
+    )
+
+    send_telemetry("builder_card_generated", {
+        "mode": env["mode"],
+        "feature_count": len(features),
+        "skill_count": len(skills),
+    })
+
+    if as_json:
+        print(json.dumps({
+            "display_name": display_name,
+            "project": project,
+            "persona": persona,
+            "features": features,
+            "skills": skills,
+            "card_url": card_url,
+            "linkedin_caption": caption,
+        }, indent=2))
+        return
+
+    print("=" * 68)
+    print(" 🏆 ANTIGRAVITY BUILDER CARD READY (MIDNIGHT AURORA GLASSMORPHISM)")
+    print("=" * 68)
+    print(f" Builder  : {display_name}")
+    print(f" Project  : {project}")
+    print(f" Features : {', '.join(features[:6])}")
+    print(f" Skills   : {', '.join(skills[:6])}")
+    print(f"\n 🎨 Open & Download 1200×630 LinkedIn PNG (Desktop & Web):")
+    print(f"    {card_url}")
+    print("\n 📋 Ready-to-Paste LinkedIn Caption:")
+    print("-" * 68)
+    print(caption)
+    print("=" * 68)
+
+
 def cmd_persona(role: str):
     norm = "builder" if role.lower() in ("builder", "vibe", "vibe-coder", "vibecoder") else "developer"
     state = load_state()
@@ -599,6 +682,9 @@ def main():
     parser.add_argument("--tip", action="store_true", help="Show a smart, non-repeating Antigravity Educator tip")
     parser.add_argument("--context", type=str, help="Contextual trigger for --tip (e.g. refactor, side_question, brainstorm, long_thread, debug, frontend)")
     parser.add_argument("--unlock", type=str, help="Record adoption of an Antigravity power feature (e.g. swarm, btw, teamwork)")
+    parser.add_argument("--card", action="store_true", help="Generate a pre-filled LinkedIn Builder Card studio link & caption")
+    parser.add_argument("--name", type=str, help="Display name for --card (saved to state.json)")
+    parser.add_argument("--project", type=str, help="Optional project highlight for --card")
     parser.add_argument("--json", action="store_true", help="Output structured JSON")
     args = parser.parse_args()
 
@@ -619,6 +705,8 @@ def main():
         cmd_tip(context_topic=args.context, override_mode=args.mode, as_json=args.json)
     elif args.unlock:
         cmd_unlock(args.unlock)
+    elif args.card:
+        cmd_card(name=args.name, project=args.project, override_mode=args.mode, as_json=args.json)
     else:
         cmd_init(override_mode=args.mode, as_json=args.json)
 

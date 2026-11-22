@@ -50,6 +50,10 @@ cat <<'EOF' > "$RULES_DIR/skills-companion.md"
      - **Immediate Contextual Trigger:** Append a 1-line tip from `companion.py --tip --context <topic>` when the moment genuinely matches (`refactor` → `/swarm`, `side_question` → `/btw`, `brainstorm` → `/grill-me`, `long_thread` → `/compact`, `debug` → `/boost`, `frontend` → `/browser`).
      - **Discovery Spotlight:** Otherwise, surface 1 fresh, non-repeating tip on Turn #1 of a new chat and roughly every 3–4 turns via `companion.py --tip`.
    - **Adoption Tracking:** Whenever the user invokes an Antigravity power feature (`/swarm`, `/btw`, `/teamwork`, `/grill-me`, `/compact`, `/boost`, `/browser`, `/learn`, `/automation`), quietly log mastery via `companion.py --unlock <feature_id>`.
+5. **Shareable LinkedIn Builder Card (Midnight Aurora Glassmorphism):**
+   - Whenever the user asks to generate their Builder Card / LinkedIn card (or celebrates a major milestone like shipping to Cloud Run or unlocking `/swarm`), ask once cleanly for their display name (and optional project highlight) if not already saved, then run:
+     `python3 ~/.gemini/config/skills/skills-companion/scripts/companion.py --card --name "<Name>" --project "<Project>"`
+   - Present the pre-filled Card Studio link (`https://gdgworkshop.github.io/skills/card.html?...`) and ready-to-paste LinkedIn caption (works seamlessly on both Desktop and Antigravity Web!).
 EOF
 
 # Anonymous install telemetry (respects DO_NOT_TRACK=1)
