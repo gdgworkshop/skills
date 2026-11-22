@@ -1,0 +1,36 @@
+name: Sync Live Antigravity & Google AI Feeds
+
+on:
+  schedule:
+    - cron: '0 1 * * *' # Runs daily at 01:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Sync live changelog and g.dev/ai/googleaitech feeds
+        run: python3 scripts/sync_feeds.py
+
+      - name: Commit updated JSON feeds if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add references/antigravity_changelog.json references/google_ai_updates.json
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(feeds): daily sync of Antigravity changelog & Google AI tech updates"
+            git push
+          else
+            echo "Feeds already up to date."
+          fi
