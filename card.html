@@ -361,9 +361,19 @@
       });
     }
 
+    function prettifySlug(slug) {
+      return slug.split(/[-_]+/).map(w => {
+        const up = w.toUpperCase();
+        if (['AI', 'API', 'ANR', 'CLI', 'GCP', 'R8', 'SDK', 'UI', 'ADK', 'MCP'].includes(up)) return up;
+        return w.charAt(0).toUpperCase() + w.slice(1);
+      }).join(' ');
+    }
+
     function getActiveLabels() {
-      const fLabels = ALL_FEATURES.filter(f => selectedFeatures.has(f.id)).map(f => f.label);
-      const sLabels = ALL_SKILLS.filter(s => selectedSkills.has(s.id)).map(s => s.label);
+      const fMap = Object.fromEntries(ALL_FEATURES.map(f => [f.id, f.label]));
+      const sMap = Object.fromEntries(ALL_SKILLS.map(s => [s.id, s.label]));
+      const fLabels = Array.from(selectedFeatures).map(id => fMap[id] || ('/' + id.replace(/_/g, '-')));
+      const sLabels = Array.from(selectedSkills).map(id => sMap[id] || prettifySlug(id));
       return {
         features: fLabels.length ? fLabels : ['/swarm', '/btw'],
         skills: sLabels.length ? sLabels : ['Gemini API', 'Cloud Run']
