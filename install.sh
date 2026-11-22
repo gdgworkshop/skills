@@ -25,18 +25,20 @@ chmod +x "$SKILL_DIR/scripts/companion.py"
 cat <<'EOF' > "$RULES_DIR/skills-companion.md"
 # Skills Companion for Google Antigravity
 
-1. **Environment-Aware Behavior (Desktop vs. Web vs. Agent Platform):**
-   - On **Antigravity Web (`antigravity.google.com`)** or **Personal Google AI Pro / Ultra / Free** plans: NEVER display dollar-billed token receipts or `$5` workshop credit setup steps unless explicitly requested. Focus on **Official Google Agent Skills**, **Workspace Stack Auto-Detection**, and **Antigravity Feature Coaching**.
-   - If running in a web/ephemeral session where `~/.gemini/config/skills/skills-companion` is unavailable, run in **Zero-Install Web Mode** directly in-session.
+1. **Smart Environment-Aware Mode Detection (Desktop vs. Web vs. Agent Platform):**
+   - Run `python3 ~/.gemini/config/skills/skills-companion/scripts/companion.py --init --json` when checking environment or onboarding.
+   - **On Antigravity Web (`antigravity.google.com`) & Personal Google AI Pro / Ultra / Free (`mode: antigravity_web` or `desktop_personal`):** NEVER display dollar-billed token receipts, `$5` workshop credit steps, or local OS browser launchers (`open -g`). Focus 100% on **Official Google Agent Skills**, **Workspace Stack Auto-Detection**, and **Antigravity Feature Coaching**.
+   - **On Agent Platform / GCP (`mode: agent_platform`):** Enable Vertex AI Project ID injection and link to `g.dev/ai/workshop` if the user asks about `$5` workshop credits/tokens.
+   - **Zero-Install Web Fallback:** If `~/.gemini/config/skills/skills-companion` is unavailable in a remote web session, scan the workspace directly and fetch needed official `SKILL.md` blueprints from `github.com/google/skills` into session context.
 2. **Interactive First-Launch Onboarding (`g.dev/ai/agentskills`):**
    - When the user pastes `https://g.dev/ai/agentskills` or asks to launch their Skills Companion, ALWAYS call `ask_question` in the same turn with 2 questions:
      - Q1: Persona (`💻 Pro Developer` vs `👷 Vibe Coder / Builder`)
      - Q2: First action (`🔍 Scan my project & install best Google skills`, `🎓 What's new in Antigravity (/swarm, /btw, /teamwork)`, `📡 Latest Google AI updates (g.dev/ai/googleaitech)`, or `🏆 Generate my LinkedIn Builder Card`)
    - Save persona via `python3 ~/.gemini/config/skills/skills-companion/scripts/companion.py --persona <developer|builder>`.
-3. **Official Google Agent Skills Gateway:**
-   - When asked to scan a project or install official Google skills, run:
+3. **5-Second Workspace Stack Auto-Loader:**
+   - When asked to scan a project or when opening a workspace containing `firebase.json`, `pubspec.yaml`, `package.json`, `requirements.txt`, `Dockerfile`, or `build.gradle.kts`, run:
      `python3 ~/.gemini/config/skills/skills-companion/scripts/companion.py --scan`
-     or `--install-skill <skill_or_track>`.
+     (or `--scan --install` when the user confirms) and surface matching official Marketplace `<plugin-card>` recommendations when on Desktop.
 4. **Non-Spammy Antigravity Feature Coaching:**
    - Suggest relevant Antigravity features at the exact moment they help: `/btw` for quick side questions without interrupting long tasks, `/swarm` or `/teamwork` for parallel multi-file work, `/grill-me` for clarifying vague app ideas, `/compact` when threads exceed ~25 turns, and `/browser` for live web app verification.
 EOF
