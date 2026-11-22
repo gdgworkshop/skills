@@ -698,10 +698,19 @@ def cmd_event_credit(credit_url: str = "", override_mode: str = None):
             print("👉 Run manually: curl -fsSL https://raw.githubusercontent.com/gdgworkshop/tokenmaxxing/main/install.sh | bash")
             return
 
-    cmd = [sys.executable, str(WORKSHOP_SCRIPT_PATH), "--step1"]
-    if credit_url and "g.dev/ai/agentskills" not in credit_url and "g.dev/ai/workshop" not in credit_url:
-        cmd.append(credit_url)
-    subprocess.run(cmd)
+    if not credit_url or "g.dev/ai/agentskills" in credit_url or "g.dev/ai/workshop" in credit_url:
+        print("=" * 68)
+        print(" 🎟️ EVENT $5 GOOGLE CLOUD CREDIT SETUP — STEP 1 OF 4")
+        print("=" * 68)
+        print(" Ready to activate your event credit in 90 seconds!")
+        print("")
+        print(" 👉 Paste your event credit link (e.g. https://g.dev/credits/...)")
+        print("    — OR reply 'claimed' if you already redeemed your $5 credit")
+        print("      and are ready to connect your Google Cloud Project (Step 2)!")
+        print("=" * 68)
+        return
+
+    subprocess.run([sys.executable, str(WORKSHOP_SCRIPT_PATH), "--step1", credit_url])
 
 
 def cmd_persona(role: str):
