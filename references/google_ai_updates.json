@@ -1,8 +1,18 @@
 {
   "source": "https://g.dev/ai/googleaitech",
   "handbook": "https://g.dev/ai/build",
-  "synced_at": "2026-11-22T06:13:28.422721+00:00",
+  "synced_at": "2026-11-23T08:39:44.526864+00:00",
   "updates": [
+    {
+      "category": "Google AI",
+      "title": "Object Enrichments",
+      "url": "https://docs.cloud.google.com/storage/docs/object-enrichments/overview"
+    },
+    {
+      "category": "Google AI",
+      "title": "Cost Effective AI Context Extraction From Unstructured Gcs Data",
+      "url": "https://cloud.google.com/blog/products/storage-data-transfer/cost-effective-ai-context-extraction-from-unstructured-gcs-data"
+    },
     {
       "category": "Antigravity",
       "title": "MCP Apps",
@@ -32,11 +42,6 @@
       "category": "BigQuery AI",
       "title": "AI Index Overview",
       "url": "https://docs.cloud.google.com/bigquery/docs/ai-index-overview"
-    },
-    {
-      "category": "BigQuery AI",
-      "title": "BigQuery AI Release Notes",
-      "url": "https://docs.cloud.google.com/bigquery/docs/release-notes"
     },
     {
       "category": "Gemini API",
@@ -72,11 +77,6 @@
       "category": "Google Labs",
       "title": "Waitlist",
       "url": "https://stitch.google.com/loop/waitlist"
-    },
-    {
-      "category": "Google Labs",
-      "title": "Stitch Loop",
-      "url": "https://blog.google/innovation-and-ai/models-and-research/google-labs/stitch-loop"
     }
   ]
 }
