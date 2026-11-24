@@ -1,7 +1,19 @@
 {
   "source": "https://antigravity.google/docs/changelog",
-  "synced_at": "2026-11-23T08:39:40.457955+00:00",
+  "synced_at": "2026-11-24T10:43:24.596505+00:00",
   "releases": [
+    {
+      "version": "v2.35.0",
+      "date": "November 23, 2026",
+      "headline": "Unlimited conversation history, Conversation Management API, and HTML artifact search",
+      "highlights": [
+        "Antigravity now keeps your local conversation history unlimited by default instead of pruning older conversations after 500.",
+        "Agents, scripts, plugins, and automations can now use the built-in Conversation Management API and conversations skill to create, list, inspect, rename, pin, star, archive, tag, group, and delete local Antigravity conversations.",
+        "The message box now places the Environment selector ahead of Project and Branch, putting SSH Host directly in the environment menu and scoping project lists with cloning submenus when remote agents are enabled.",
+        "Auto permission mode now approves file reads outside your current project automatically while keeping sensitive configuration directories protected.",
+        "Permission prompts for writing files outside your project now suggest directory scopes instead of single files, and bold target paths and patterns for faster scanning."
+      ]
+    },
     {
       "version": "v2.34.0",
       "date": "November 20, 2026",
@@ -24,14 +36,6 @@
         "Finished /btw side-question answers now include an Insert into main conversation action, and you can start a side question from selected subagent text or promote a subagent tab to Full View when running /btw.",
         "You can now search within pages in the built-in browser with Cmd/Ctrl+F from either the browser toolbar or the page itself, while web apps with their own search keep handling the shortcut.",
         "You can now choose the Nord dark theme and matching syntax palette in Settings > Appearance."
-      ]
-    },
-    {
-      "version": "v2.32.2",
-      "date": "November 16, 2026",
-      "headline": "Multi-turn /btw side-question tabs and diagnostic logging fix",
-      "highlights": [
-        "Side questions (/btw) now open in a dedicated Side Question tab in the side panel where you can ask multi-turn follow-up questions and let the agent read files, search your workspace, and run read-only commands without interrupting the main conversation."
       ]
     }
   ]

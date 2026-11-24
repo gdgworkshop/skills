@@ -1,8 +1,18 @@
 {
   "source": "https://g.dev/ai/googleaitech",
   "handbook": "https://g.dev/ai/build",
-  "synced_at": "2026-11-23T08:39:44.526864+00:00",
+  "synced_at": "2026-11-24T10:43:28.293453+00:00",
   "updates": [
+    {
+      "category": "Antigravity",
+      "title": "Artifacts",
+      "url": "https://antigravity.google/docs/artifacts"
+    },
+    {
+      "category": "Antigravity",
+      "title": "Releases",
+      "url": "https://antigravity.google/releases?tab=hub&version=2.35.0"
+    },
     {
       "category": "Google AI",
       "title": "Object Enrichments",
@@ -67,16 +77,6 @@
       "category": "Gemini API",
       "title": "Gemini 4 Neon",
       "url": "https://aistudio.google.com/docs/models/gemini-4-neon"
-    },
-    {
-      "category": "Gemini API",
-      "title": "Introducing Gemini 4 Neon",
-      "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-neon"
-    },
-    {
-      "category": "Google Labs",
-      "title": "Waitlist",
-      "url": "https://stitch.google.com/loop/waitlist"
     }
   ]
 }
