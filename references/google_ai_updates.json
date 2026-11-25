@@ -1,8 +1,28 @@
 {
   "source": "https://g.dev/ai/googleaitech",
   "handbook": "https://g.dev/ai/build",
-  "synced_at": "2026-11-24T10:43:28.293453+00:00",
+  "synced_at": "2026-11-25T09:38:56.373607+00:00",
   "updates": [
+    {
+      "category": "Google AI",
+      "title": "Configure MCP Servers",
+      "url": "https://developers.google.com/workspace/guides/configure-mcp-servers"
+    },
+    {
+      "category": "Google AI",
+      "title": "Deploying Agents Safely In Your Enterprise",
+      "url": "https://cloud.google.com/blog/products/identity-security/deploying-agents-safely-in-your-enterprise"
+    },
+    {
+      "category": "Google AI",
+      "title": "Omni",
+      "url": "https://cloud.google.com/alloydb/omni"
+    },
+    {
+      "category": "Google AI",
+      "title": "Alloydb Omni Integration With Local Models",
+      "url": "https://cloud.google.com/blog/products/databases/alloydb-omni-integration-with-local-models"
+    },
     {
       "category": "Antigravity",
       "title": "Artifacts",
@@ -57,26 +77,6 @@
       "category": "Gemini API",
       "title": "Tool Retrieval",
       "url": "https://aistudio.google.com/docs/tool-retrieval"
-    },
-    {
-      "category": "Gemini API",
-      "title": "Gemini API Tool Retrieval",
-      "url": "https://blog.google/innovation-and-ai/technology/developers-tools/gemini-api-tool-retrieval"
-    },
-    {
-      "category": "Gemini API",
-      "title": "Genie",
-      "url": "https://aistudio.google.com/docs/genie"
-    },
-    {
-      "category": "Gemini API",
-      "title": "Genie 4 In Gemini API",
-      "url": "https://blog.google/innovation-and-ai/technology/developers-tools/genie-4-in-gemini-api"
-    },
-    {
-      "category": "Gemini API",
-      "title": "Gemini 4 Neon",
-      "url": "https://aistudio.google.com/docs/models/gemini-4-neon"
     }
   ]
 }
