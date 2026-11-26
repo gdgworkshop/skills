@@ -1,7 +1,7 @@
 {
   "source": "https://g.dev/ai/googleaitech",
   "handbook": "https://g.dev/ai/build",
-  "synced_at": "2026-11-25T09:38:56.373607+00:00",
+  "synced_at": "2026-11-26T09:14:17.387900+00:00",
   "updates": [
     {
       "category": "Google AI",
@@ -12,6 +12,16 @@
       "category": "Google AI",
       "title": "Deploying Agents Safely In Your Enterprise",
       "url": "https://cloud.google.com/blog/products/identity-security/deploying-agents-safely-in-your-enterprise"
+    },
+    {
+      "category": "Gemini API",
+      "title": "Search Data Stores",
+      "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/build/vector-search-2/query-search/search-data-stores"
+    },
+    {
+      "category": "Google AI",
+      "title": "From Files To Cited Answers In One API Call Managed Ingestion And Searchdocuments In Agent Retrieval",
+      "url": "https://developers.googleblog.com/from-files-to-cited-answers-in-one-api-call-managed-ingestion-and-searchdocuments-in-agent-retrieval"
     },
     {
       "category": "Google AI",
@@ -67,16 +77,6 @@
       "category": "Agent Development Kit (ADK)",
       "title": "Agent Development Kit (ADK) v2.15.0",
       "url": "https://github.com/google/adk-python/releases/tag/v2.15.0"
-    },
-    {
-      "category": "BigQuery AI",
-      "title": "AI Index Overview",
-      "url": "https://docs.cloud.google.com/bigquery/docs/ai-index-overview"
-    },
-    {
-      "category": "Gemini API",
-      "title": "Tool Retrieval",
-      "url": "https://aistudio.google.com/docs/tool-retrieval"
     }
   ]
 }

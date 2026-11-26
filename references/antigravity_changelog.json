@@ -1,7 +1,13 @@
 {
   "source": "https://antigravity.google/docs/changelog",
-  "synced_at": "2026-11-25T09:38:52.456194+00:00",
+  "synced_at": "2026-11-26T09:14:13.785144+00:00",
   "releases": [
+    {
+      "version": "v2.35.2",
+      "date": "November 25, 2026",
+      "headline": "Switch models while a turn is running",
+      "highlights": []
+    },
     {
       "version": "v2.35.1",
       "date": "November 24, 2026",
@@ -21,18 +27,6 @@
         "The message box now places the Environment selector ahead of Project and Branch, putting SSH Host directly in the environment menu and scoping project lists with cloning submenus when remote agents are enabled.",
         "Auto permission mode now approves file reads outside your current project automatically while keeping sensitive configuration directories protected.",
         "Permission prompts for writing files outside your project now suggest directory scopes instead of single files, and bold target paths and patterns for faster scanning."
-      ]
-    },
-    {
-      "version": "v2.34.0",
-      "date": "November 20, 2026",
-      "headline": "Gemini 4 Neon, MCP Apps, and more",
-      "highlights": [
-        "Gemini 4 Neon and Orchestrator (Neon) are now available for eligible paid consumer plans, and Gemini 4 Neon is available with Gemini API keys and Application Default Credentials. Enterprise and Application Default Credentials accounts also now support the Orchestrator.",
-        "You can now choose whether Enter or Ctrl+Enter (Cmd+Enter on macOS) sends messages under Settings > General > Input Box.",
-        "You can now start a side question directly from selected output in the integrated terminal using Cmd+E (Ctrl+E on Windows and Linux) or the selection popup.",
-        "Diff views now use a single-column line-number gutter with color-coded change strips, giving code more horizontal room before wrapping.",
-        "You can now drag conversation tabs from the side panel directly into the message box to reference them in a prompt."
       ]
     }
   ]
