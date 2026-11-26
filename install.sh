@@ -38,12 +38,14 @@ cat <<'EOF' > "$RULES_DIR/skills-companion.md"
    - When the user pastes `https://g.dev/ai/agentskills` or asks to launch their Skills Companion, first refresh to the latest version (`curl -fsSL https://raw.githubusercontent.com/gdgworkshop/skills/main/install.sh | bash && python3 ~/.gemini/config/skills/skills-companion/scripts/companion.py --init`), then ALWAYS call `ask_question` in the same turn with 2 questions:
      - Q1: Persona (`💻 Pro Developer` vs `👷 Vibe Coder / Builder`)
      - Q2: First action:
-       - `(Recommended) 🔍 Scan my project & install the best official Google Agent Skills`
+       - **Smart Option 1:** If workspace has project files → `(Recommended) 🔍 Scan my project & install the best official Google Agent Skills`; if blank chat / no project open → `(Recommended) 🚀 Build & ship a new idea on Google Cloud (Gemini + Cloud Run)`
        - `🎓 Show me what's new in Antigravity (/swarm, /btw, /teamwork, MCP Apps)`
        - `📡 Show me the latest Google AI launches (g.dev/ai/googleaitech)`
        - *(Desktop / CLI / IDE ONLY — omit on Antigravity Web `antigravity.google.com`)*: `🎟️ I'm at an event / workshop — activate my $5 Google Cloud credit`
        - `🏆 Generate my Antigravity Builder Card for LinkedIn`
    - Save persona via `python3 ~/.gemini/config/skills/skills-companion/scripts/companion.py --persona <developer|builder>`.
+   - **Build & Ship New Idea on Google Cloud:** When chosen (or when starting from scratch), clarify the idea in 3–4 bullets, pick the simplest architecture (Web App, Web App + Gemini Flash, or ADK), lazy-load only the needed official Google skills, build locally, deploy to Cloud Run (`--min-instances=0`), generate `infra/teardown.sh`, and offer their LinkedIn Builder Card!
+   - **Hard $5 Scale-to-Zero Guardrails & Lazy Loading:** Default to Cloud Run (`--min-instances=0`), Firestore free tier, Cloud Storage, and Gemini Flash; ALWAYS warn before provisioning always-on/hourly services (Cloud SQL, GKE, VMs). Load each `SKILL.md` lazily only when its phase starts.
    - **On-Demand Event Credit Bridge:** If a Desktop user picks the `$5` credit option, asks to activate event credits, or pastes a `https://g.dev/credits/...` link, run `python3 ~/.gemini/config/skills/skills-companion/scripts/companion.py --event-credit ["<CREDIT_URL>"]` (1 step at a time!). If on Antigravity Web (`antigravity.google.com`), politely explain that `$5` GCP credits require Antigravity Desktop/CLI (`https://antigravity.google/download`).
 3. **5-Second Workspace Stack Auto-Loader:**
    - When asked to scan a project or when opening a workspace containing `firebase.json`, `pubspec.yaml`, `package.json`, `requirements.txt`, `Dockerfile`, or `build.gradle.kts`, run:
@@ -58,9 +60,9 @@ cat <<'EOF' > "$RULES_DIR/skills-companion.md"
      - **Discovery Spotlight:** Otherwise, surface 1 fresh, non-repeating tip on Turn #1 of a new chat and roughly every 3–4 turns via `companion.py --tip`.
    - **Adoption Tracking:** Whenever the user invokes an Antigravity power feature (`/swarm`, `/btw`, `/teamwork`, `/grill-me`, `/compact`, `/boost`, `/browser`, `/learn`, `/automation`), quietly log mastery via `companion.py --unlock <feature_id>`.
 5. **Shareable LinkedIn Builder Card (Midnight Aurora Glassmorphism):**
-   - Whenever the user asks to generate their Builder Card / LinkedIn card (or celebrates a major milestone like shipping to Cloud Run or unlocking `/swarm`), ask once cleanly for their display name (and optional project highlight) if not already saved, then run:
-     `python3 ~/.gemini/config/skills/skills-companion/scripts/companion.py --card --name "<Name>" --project "<Project>"`
-   - Present the pre-filled Card Studio link (`https://gdgworkshop.github.io/skills/card.html?...`) and ready-to-paste LinkedIn caption (works seamlessly on both Desktop and Antigravity Web!).
+   - Whenever the user asks to generate their Builder Card / LinkedIn card (or celebrates a major milestone like shipping to Cloud Run or unlocking `/swarm`), ask once cleanly for their display name (and optional project/event highlight) if not already saved, then run:
+     `python3 ~/.gemini/config/skills/skills-companion/scripts/companion.py --card --name "<Name>" --project "<Project>" [--event "<Event>"]`
+   - Present the pre-filled Card Studio link (`https://gdgworkshop.github.io/skills/card.html?...`) and ready-to-paste LinkedIn caption (works seamlessly on Desktop, Antigravity Web, and other IDEs!).
 EOF
 
 # Anonymous install telemetry (respects DO_NOT_TRACK=1)

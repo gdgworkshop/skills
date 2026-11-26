@@ -19,7 +19,7 @@ import uuid
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-VERSION = "1.3.2"
+VERSION = "1.4.0"
 CARD_STUDIO_URL = "https://gdgworkshop.github.io/skills/card.html"
 WORKSHOP_INSTALLER_URL = "https://raw.githubusercontent.com/gdgworkshop/tokenmaxxing/main/install.sh"
 WORKSHOP_SCRIPT_PATH = Path.home() / ".gemini" / "config" / "skills" / "tokenmaxxing" / "scripts" / "tokenmaxx.py"
@@ -581,15 +581,19 @@ def cmd_scan(cwd: str = None, auto_install: bool = False, as_json: bool = False)
         print("\n✨ All recommended official Google skills for this project are already installed!")
 
 
-def cmd_card(name: str = None, project: str = None, override_mode: str = None, as_json: bool = False):
+def cmd_card(name: str = None, project: str = None, event: str = None, override_mode: str = None, as_json: bool = False):
     env = detect_environment(override_mode)
     state = load_state()
 
     if name:
         state["display_name"] = name.strip()
         save_state(state)
+    if event is not None:
+        state["event_name"] = event.strip()
+        save_state(state)
 
     display_name = (name or state.get("display_name") or "Antigravity Builder").strip()
+    event_name = (event if event is not None else state.get("event_name") or "").strip()
     persona = state.get("persona") or "developer"
     if env["has_active_workshop"]:
         persona = "workshop"
@@ -612,33 +616,46 @@ def cmd_card(name: str = None, project: str = None, override_mode: str = None, a
         else:
             project = "Building with Google Antigravity"
 
-    query = urllib.parse.urlencode({
+    query_params = {
         "name": display_name,
         "project": project,
         "persona": persona,
         "features": ",".join(features[:6]),
         "skills": ",".join(skills[:6]),
-    })
+    }
+    if event_name:
+        query_params["event"] = event_name
+
+    query = urllib.parse.urlencode(query_params)
     card_url = f"{CARD_STUDIO_URL}?{query}"
 
     feat_pretty = ", ".join([f"/{f.replace('_', '-')}" if f not in ("mcp_apps", "remote_agents") else f.replace("_", " ").title() for f in features[:3]])
+    event_phrase = f" at {event_name}" if event_name else ""
+    event_tag = ""
+    if event_name:
+        tag_clean = "".join(w[0].upper() + w[1:] if w else "" for w in re.split(r"[^a-zA-Z0-9]+", event_name))
+        if tag_clean:
+            event_tag = f" #{tag_clean}"
+
     caption = (
-        f"Excited to level up my workflow in Google Antigravity using {feat_pretty} "
+        f"Excited to level up my workflow in Google Antigravity{event_phrase} using {feat_pretty} "
         f"alongside official Google Agent Skills — {project}!\n\n"
-        f"Try the Skills Companion in 1 prompt (Desktop & Web): https://g.dev/ai/agentskills\n\n"
-        f"#GoogleAntigravity #VibeCoding #GoogleAI #BuildWithGemini"
+        f"Try the Skills Companion in 1 prompt (Desktop, Web & other AI IDEs): https://g.dev/ai/agentskills\n\n"
+        f"#GoogleAntigravity #VibeCoding #GoogleAI #BuildWithGemini{event_tag}"
     )
 
     send_telemetry("builder_card_generated", {
         "mode": env["mode"],
         "feature_count": len(features),
         "skill_count": len(skills),
+        "has_event": bool(event_name),
     })
 
     if as_json:
         print(json.dumps({
             "display_name": display_name,
             "project": project,
+            "event": event_name,
             "persona": persona,
             "features": features,
             "skills": skills,
@@ -652,6 +669,8 @@ def cmd_card(name: str = None, project: str = None, override_mode: str = None, a
     print("=" * 68)
     print(f" Builder  : {display_name}")
     print(f" Project  : {project}")
+    if event_name:
+        print(f" Event    : {event_name}")
     print(f" Features : {', '.join(features[:6])}")
     print(f" Skills   : {', '.join(skills[:6])}")
     print(f"\n 🎨 Open & Download 1200×630 LinkedIn PNG (Desktop & Web):")
@@ -739,6 +758,7 @@ def main():
     parser.add_argument("--card", action="store_true", help="Generate a pre-filled LinkedIn Builder Card studio link & caption")
     parser.add_argument("--name", type=str, help="Display name for --card (saved to state.json)")
     parser.add_argument("--project", type=str, help="Optional project highlight for --card")
+    parser.add_argument("--event", type=str, help="Optional Event / Community name for --card (e.g. DevFest Singapore 2026)")
     parser.add_argument("--event-credit", dest="event_credit", nargs="?", const="", default=None, help="Activate $5 GDG event cloud credit (Desktop/CLI only)")
     parser.add_argument("--json", action="store_true", help="Output structured JSON")
     args = parser.parse_args()
@@ -761,7 +781,7 @@ def main():
     elif args.unlock:
         cmd_unlock(args.unlock)
     elif args.card:
-        cmd_card(name=args.name, project=args.project, override_mode=args.mode, as_json=args.json)
+        cmd_card(name=args.name, project=args.project, event=args.event, override_mode=args.mode, as_json=args.json)
     elif args.event_credit is not None:
         cmd_event_credit(credit_url=args.event_credit, override_mode=args.mode)
     else:

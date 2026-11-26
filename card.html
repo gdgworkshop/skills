@@ -213,6 +213,10 @@
           <input id="inp-project" type="text" placeholder="e.g. Shipped AI App on Cloud Run" value="Building with Google Antigravity" oninput="draw()" />
         </div>
         <div class="field">
+          <label for="inp-event">Event / Community (Optional)</label>
+          <input id="inp-event" type="text" placeholder="e.g. DevFest Singapore 2026" value="" oninput="draw()" />
+        </div>
+        <div class="field">
           <label for="inp-persona">Card Persona / Mode</label>
           <select id="inp-persona" onchange="draw()">
             <option value="developer">💻 Pro Developer</option>
@@ -272,6 +276,7 @@
       const q = new URLSearchParams(window.location.search);
       if (q.get('name')) document.getElementById('inp-name').value = q.get('name');
       if (q.get('project')) document.getElementById('inp-project').value = q.get('project');
+      if (q.get('event')) document.getElementById('inp-event').value = q.get('event');
       if (q.get('persona')) {
         const p = q.get('persona').toLowerCase();
         if (p.includes('build') || p.includes('vibe')) document.getElementById('inp-persona').value = 'builder';
@@ -390,11 +395,12 @@
       const W = 1200, H = 630;
       const name = document.getElementById('inp-name').value.trim() || 'Antigravity Builder';
       const project = document.getElementById('inp-project').value.trim() || 'Building with Google Antigravity';
+      const eventVal = (document.getElementById('inp-event').value || '').trim();
       const modeVal = document.getElementById('inp-persona').value;
       const active = getActiveLabels();
 
       const headerTitle = modeVal === 'workshop' ? 'GDG WORKSHOP BUILDER CERTIFICATE' : 'ANTIGRAVITY BUILDER CARD';
-      const roleBadge = modeVal === 'builder' ? 'VIBE CODER' : (modeVal === 'workshop' ? 'GDG WORKSHOP' : 'PRO DEVELOPER');
+      const roleBadge = eventVal ? eventVal.toUpperCase() : (modeVal === 'builder' ? 'VIBE CODER' : (modeVal === 'workshop' ? 'GDG WORKSHOP' : 'PRO DEVELOPER'));
       const monthYear = new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' }).toUpperCase();
 
       // Background base
@@ -543,10 +549,13 @@
 
     function buildCaption() {
       const project = document.getElementById('inp-project').value.trim();
+      const eventVal = (document.getElementById('inp-event').value || '').trim();
       const active = getActiveLabels();
       const fList = active.features.slice(0, 3).join(', ');
       const sList = active.skills.slice(0, 3).join(', ');
-      return `Excited to level up my workflow in Google Antigravity using ${fList} alongside official Google Agent Skills (${sList}) — ${project}!\n\nTry the Skills Companion in 1 prompt on Desktop or Web: https://g.dev/ai/agentskills\n\n#GoogleAntigravity #VibeCoding #GoogleAI #BuildWithGemini`;
+      const eventPhrase = eventVal ? ` at ${eventVal}` : '';
+      const eventTag = eventVal ? ' #' + eventVal.replace(/[^a-zA-Z0-9]+/g, '') : '';
+      return `Excited to level up my workflow in Google Antigravity${eventPhrase} using ${fList} alongside official Google Agent Skills (${sList}) — ${project}!\n\nTry the Skills Companion in 1 prompt on Desktop, Web, or your favorite AI IDE: https://g.dev/ai/agentskills\n\n#GoogleAntigravity #VibeCoding #GoogleAI #BuildWithGemini${eventTag}`;
     }
 
     function downloadPng() {
