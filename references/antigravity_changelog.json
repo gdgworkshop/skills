@@ -1,7 +1,19 @@
 {
   "source": "https://antigravity.google/docs/changelog",
-  "synced_at": "2026-11-27T09:28:57.788986+00:00",
+  "synced_at": "2026-11-28T08:42:46.015392+00:00",
   "releases": [
+    {
+      "version": "v2.36.0",
+      "date": "November 27, 2026",
+      "headline": "Floating composer in maximized panels, Auto mode edits, and voice context",
+      "highlights": [
+        "Added a floating composer pill at the bottom of maximized side panels with a live status bar showing agent progress, unread replies, and saved drafts; expand it to send follow-ups or start dictation without leaving the maximized view.",
+        "Expanded Auto mode to automatically approve safe file edits in other version-controlled repositories and non-replacing file additions outside your current project without prompting for confirmation.",
+        "Carried spoken context from live voice calls that end before handoff into the local conversation so the agent remembers what you discussed.",
+        "Added discovery for custom skills stored in `~/.agents/skills`, with skills in `~/.gemini` taking precedence if two skills share the same name.",
+        "Kept disabled plugin and Marketplace controls visible in Customizations as grayed-out options with an explanation tooltip when an organization administrator turns them off, while built-in plugins continue to work."
+      ]
+    },
     {
       "version": "v2.35.2",
       "date": "November 25, 2026",
@@ -15,18 +27,6 @@
       "highlights": [
         "Added automatic resumption on startup for active conversations interrupted by an app restart or update.",
         "Updated plugin panel links in live agent replies to open their view automatically in the side panel."
-      ]
-    },
-    {
-      "version": "v2.35.0",
-      "date": "November 23, 2026",
-      "headline": "Unlimited conversation history, Conversation Management API, and HTML artifact search",
-      "highlights": [
-        "Antigravity now keeps your local conversation history unlimited by default instead of pruning older conversations after 500.",
-        "Agents, scripts, plugins, and automations can now use the built-in Conversation Management API and conversations skill to create, list, inspect, rename, pin, star, archive, tag, group, and delete local Antigravity conversations.",
-        "The message box now places the Environment selector ahead of Project and Branch, putting SSH Host directly in the environment menu and scoping project lists with cloning submenus when remote agents are enabled.",
-        "Auto permission mode now approves file reads outside your current project automatically while keeping sensitive configuration directories protected.",
-        "Permission prompts for writing files outside your project now suggest directory scopes instead of single files, and bold target paths and patterns for faster scanning."
       ]
     }
   ]

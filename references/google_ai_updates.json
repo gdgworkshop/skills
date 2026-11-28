@@ -1,8 +1,28 @@
 {
   "source": "https://g.dev/ai/googleaitech",
   "handbook": "https://g.dev/ai/build",
-  "synced_at": "2026-11-27T09:29:01.083200+00:00",
+  "synced_at": "2026-11-28T08:42:49.604773+00:00",
   "updates": [
+    {
+      "category": "Antigravity",
+      "title": "Skills",
+      "url": "https://antigravity.google/docs/skills"
+    },
+    {
+      "category": "Antigravity",
+      "title": "Releases",
+      "url": "https://antigravity.google/releases?tab=hub&version=2.36.0"
+    },
+    {
+      "category": "Antigravity",
+      "title": "Science",
+      "url": "https://antigravity.google/use-cases/science"
+    },
+    {
+      "category": "Google AI",
+      "title": "Interpreting Mass Spectra With Google Antigravity",
+      "url": "https://deepmind.google/blog/interpreting-mass-spectra-with-google-antigravity"
+    },
     {
       "category": "Google AI",
       "title": "Configure MCP Servers",
@@ -39,11 +59,6 @@
       "url": "https://antigravity.google/docs/artifacts"
     },
     {
-      "category": "Antigravity",
-      "title": "Releases",
-      "url": "https://antigravity.google/releases?tab=hub&version=2.35.0"
-    },
-    {
       "category": "Google AI",
       "title": "Object Enrichments",
       "url": "https://docs.cloud.google.com/storage/docs/object-enrichments/overview"
@@ -62,21 +77,6 @@
       "category": "Gemini API",
       "title": "Semantic Governance Overview",
       "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/govern/policies/semantic-governance-overview"
-    },
-    {
-      "category": "Google AI",
-      "title": "Check What Your AI Agents Do Before They Do It With Semantic Governance Policies",
-      "url": "https://developers.googleblog.com/check-what-your-ai-agents-do-before-they-do-it-with-semantic-governance-policies"
-    },
-    {
-      "category": "Agent Development Kit (ADK)",
-      "title": "ADK.Dev",
-      "url": "https://adk.dev"
-    },
-    {
-      "category": "Agent Development Kit (ADK)",
-      "title": "Agent Development Kit (ADK) v2.15.0",
-      "url": "https://github.com/google/adk-python/releases/tag/v2.15.0"
     }
   ]
 }
