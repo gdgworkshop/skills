@@ -203,6 +203,17 @@
     <!-- Live Customization Panel -->
     <div class="editor-panel">
       <div class="editor-title">✨ Customize Your Builder Card</div>
+
+      <div class="chips-group" style="margin-bottom:18px;">
+        <div class="chips-group-label">🎨 Color Theme</div>
+        <div class="chips-wrap" id="theme-chips">
+          <button type="button" class="chip-btn active-blue" id="theme-aurora" onclick="setTheme('aurora')">🌌 Midnight Aurora</button>
+          <button type="button" class="chip-btn" id="theme-neon" onclick="setTheme('neon')">⚡ Gemini Neon</button>
+          <button type="button" class="chip-btn" id="theme-sunset" onclick="setTheme('sunset')">🌅 Crimson Sunset</button>
+          <button type="button" class="chip-btn" id="theme-emerald" onclick="setTheme('emerald')">💎 Emerald Glow</button>
+        </div>
+      </div>
+
       <div class="form-grid">
         <div class="field">
           <label for="inp-name">Your Name</label>
@@ -271,12 +282,124 @@
 
     let selectedFeatures = new Set(['swarm', 'btw', 'grill_me', 'mcp_apps']);
     let selectedSkills = new Set(['gemini-api', 'firebase-basics', 'cloud-run-basics']);
+    let currentTheme = 'aurora';
+
+    const THEMES = {
+      aurora: {
+        bg: '#090d16',
+        g1: 'rgba(66, 133, 244, 0.32)',
+        g2: 'rgba(52, 211, 153, 0.24)',
+        g3: 'rgba(168, 85, 247, 0.18)',
+        frameBorder: 'rgba(255, 255, 255, 0.13)',
+        headerColor: '#93c5fd',
+        nameGrad: ['#ffffff', '#bfdbfe', '#6ee7b7'],
+        projectColor: '#34d399',
+        panelBg: 'rgba(20, 28, 48, 0.72)',
+        leftBorder: 'rgba(56, 189, 248, 0.30)',
+        rightBorder: 'rgba(52, 211, 153, 0.30)',
+        leftTitle: '#38bdf8',
+        rightTitle: '#34d399',
+        featPill: { bg: 'rgba(56, 189, 248, 0.14)', border: 'rgba(56, 189, 248, 0.45)', fg: '#e0f2fe' },
+        skillPill: {
+          bg: ['rgba(66,133,244,0.16)', 'rgba(251,188,5,0.16)', 'rgba(52,168,83,0.16)', 'rgba(56,189,248,0.16)'],
+          border: ['rgba(66,133,244,0.52)', 'rgba(251,188,5,0.52)', 'rgba(52,168,83,0.52)', 'rgba(56,189,248,0.52)'],
+          fg: ['#bfdbfe', '#fef08a', '#bbf7d0', '#bae6fd']
+        },
+        ctaColor: '#38bdf8'
+      },
+      neon: {
+        bg: '#070412',
+        g1: 'rgba(0, 245, 255, 0.34)',
+        g2: 'rgba(255, 46, 151, 0.30)',
+        g3: 'rgba(168, 85, 247, 0.30)',
+        frameBorder: 'rgba(0, 245, 255, 0.42)',
+        headerColor: '#00f5ff',
+        nameGrad: ['#ffffff', '#00f5ff', '#ff5ec4'],
+        projectColor: '#39ff14',
+        panelBg: 'rgba(18, 10, 38, 0.78)',
+        leftBorder: 'rgba(0, 245, 255, 0.50)',
+        rightBorder: 'rgba(255, 46, 151, 0.50)',
+        leftTitle: '#00f5ff',
+        rightTitle: '#ff5ec4',
+        featPill: { bg: 'rgba(0, 245, 255, 0.14)', border: 'rgba(0, 245, 255, 0.62)', fg: '#ccfaff' },
+        skillPill: {
+          bg: ['rgba(255,46,151,0.16)', 'rgba(0,245,255,0.15)', 'rgba(168,85,247,0.20)', 'rgba(57,255,20,0.14)'],
+          border: ['rgba(255,46,151,0.62)', 'rgba(0,245,255,0.62)', 'rgba(192,132,252,0.62)', 'rgba(57,255,20,0.55)'],
+          fg: ['#ffd1ec', '#ccfaff', '#f3e8ff', '#d9ffcf']
+        },
+        ctaColor: '#00f5ff'
+      },
+      sunset: {
+        bg: '#12080e',
+        g1: 'rgba(244, 63, 94, 0.34)',
+        g2: 'rgba(251, 191, 36, 0.24)',
+        g3: 'rgba(236, 72, 153, 0.22)',
+        frameBorder: 'rgba(251, 113, 133, 0.30)',
+        headerColor: '#fda4af',
+        nameGrad: ['#ffffff', '#fecdd3', '#fde68a'],
+        projectColor: '#fbbf24',
+        panelBg: 'rgba(34, 15, 26, 0.74)',
+        leftBorder: 'rgba(244, 63, 94, 0.42)',
+        rightBorder: 'rgba(251, 191, 36, 0.40)',
+        leftTitle: '#fb7185',
+        rightTitle: '#fbbf24',
+        featPill: { bg: 'rgba(244, 63, 94, 0.16)', border: 'rgba(251, 113, 133, 0.55)', fg: '#ffe4e6' },
+        skillPill: {
+          bg: ['rgba(251,191,36,0.16)', 'rgba(244,63,94,0.16)', 'rgba(251,146,60,0.16)', 'rgba(232,121,249,0.16)'],
+          border: ['rgba(251,191,36,0.55)', 'rgba(251,113,133,0.55)', 'rgba(251,146,60,0.55)', 'rgba(232,121,249,0.55)'],
+          fg: ['#fef3c7', '#ffe4e6', '#ffedd5', '#fae8ff']
+        },
+        ctaColor: '#fbbf24'
+      },
+      emerald: {
+        bg: '#05110e',
+        g1: 'rgba(16, 185, 129, 0.32)',
+        g2: 'rgba(34, 211, 238, 0.24)',
+        g3: 'rgba(52, 211, 153, 0.20)',
+        frameBorder: 'rgba(52, 211, 153, 0.30)',
+        headerColor: '#6ee7b7',
+        nameGrad: ['#ffffff', '#a7f3d0', '#67e8f9'],
+        projectColor: '#22d3ee',
+        panelBg: 'rgba(10, 30, 26, 0.74)',
+        leftBorder: 'rgba(52, 211, 153, 0.42)',
+        rightBorder: 'rgba(34, 211, 238, 0.40)',
+        leftTitle: '#34d399',
+        rightTitle: '#22d3ee',
+        featPill: { bg: 'rgba(16, 185, 129, 0.16)', border: 'rgba(52, 211, 153, 0.55)', fg: '#d1fae5' },
+        skillPill: {
+          bg: ['rgba(34,211,238,0.16)', 'rgba(16,185,129,0.16)', 'rgba(163,230,53,0.15)', 'rgba(56,189,248,0.16)'],
+          border: ['rgba(34,211,238,0.55)', 'rgba(52,211,153,0.55)', 'rgba(163,230,53,0.52)', 'rgba(56,189,248,0.55)'],
+          fg: ['#cffafe', '#d1fae5', '#ecfccb', '#e0f2fe']
+        },
+        ctaColor: '#34d399'
+      }
+    };
+
+    function setTheme(themeId) {
+      if (!THEMES[themeId]) return;
+      currentTheme = themeId;
+      ['aurora', 'neon', 'sunset', 'emerald'].forEach(t => {
+        const btn = document.getElementById('theme-' + t);
+        if (btn) btn.className = 'chip-btn' + (t === themeId ? ' active-blue' : '');
+      });
+      draw();
+      if (typeof gtag === 'function') {
+        gtag('event', 'builder_card_theme_selected', { 'theme': themeId, 'entry_surface': 'agentskills' });
+      }
+    }
 
     function hydrateFromQuery() {
       const q = new URLSearchParams(window.location.search);
       if (q.get('name')) document.getElementById('inp-name').value = q.get('name');
       if (q.get('project')) document.getElementById('inp-project').value = q.get('project');
       if (q.get('event')) document.getElementById('inp-event').value = q.get('event');
+      if (q.get('theme') && THEMES[q.get('theme').toLowerCase()]) {
+        currentTheme = q.get('theme').toLowerCase();
+        ['aurora', 'neon', 'sunset', 'emerald'].forEach(t => {
+          const btn = document.getElementById('theme-' + t);
+          if (btn) btn.className = 'chip-btn' + (t === currentTheme ? ' active-blue' : '');
+        });
+      }
       if (q.get('persona')) {
         const p = q.get('persona').toLowerCase();
         if (p.includes('build') || p.includes('vibe')) document.getElementById('inp-persona').value = 'builder';
@@ -403,31 +526,33 @@
       const roleBadge = eventVal ? eventVal.toUpperCase() : (modeVal === 'builder' ? 'VIBE CODER' : (modeVal === 'workshop' ? 'GDG WORKSHOP' : 'PRO DEVELOPER'));
       const monthYear = new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' }).toUpperCase();
 
+      const T = THEMES[currentTheme] || THEMES.aurora;
+
       // Background base
-      ctx.fillStyle = '#090d16';
+      ctx.fillStyle = T.bg;
       ctx.fillRect(0, 0, W, H);
 
-      // Signature Midnight Aurora glows
+      // Signature Glassmorphism glows
       const g1 = ctx.createRadialGradient(240, 110, 20, 240, 110, 480);
-      g1.addColorStop(0, 'rgba(66, 133, 244, 0.32)');
+      g1.addColorStop(0, T.g1);
       g1.addColorStop(1, 'rgba(9, 13, 22, 0)');
       ctx.fillStyle = g1;
       ctx.fillRect(0, 0, W, H);
 
       const g2 = ctx.createRadialGradient(990, 510, 20, 990, 510, 430);
-      g2.addColorStop(0, 'rgba(52, 211, 153, 0.24)');
+      g2.addColorStop(0, T.g2);
       g2.addColorStop(1, 'rgba(9, 13, 22, 0)');
       ctx.fillStyle = g2;
       ctx.fillRect(0, 0, W, H);
 
       const g3 = ctx.createRadialGradient(970, 90, 10, 970, 90, 340);
-      g3.addColorStop(0, 'rgba(168, 85, 247, 0.18)');
+      g3.addColorStop(0, T.g3);
       g3.addColorStop(1, 'rgba(9, 13, 22, 0)');
       ctx.fillStyle = g3;
       ctx.fillRect(0, 0, W, H);
 
       // Subtle architectural dot grid
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+      ctx.fillStyle = currentTheme === 'neon' ? 'rgba(0, 245, 255, 0.08)' : 'rgba(255, 255, 255, 0.05)';
       for (let gx = 36; gx < W; gx += 36) {
         for (let gy = 36; gy < H; gy += 36) {
           ctx.fillRect(gx, gy, 2, 2);
@@ -436,8 +561,8 @@
 
       // Outer glass frame
       roundRect(ctx, 24, 24, W - 48, H - 48, 28);
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.13)';
-      ctx.lineWidth = 2;
+      ctx.strokeStyle = T.frameBorder;
+      ctx.lineWidth = currentTheme === 'neon' ? 2.5 : 2;
       ctx.stroke();
 
       // Google 4-color dots
@@ -449,7 +574,7 @@
       });
 
       ctx.font = '700 16px "Google Sans", Inter, -apple-system, sans-serif';
-      ctx.fillStyle = '#93c5fd';
+      ctx.fillStyle = T.headerColor;
       ctx.textBaseline = 'middle';
       ctx.fillText(headerTitle, 156, 79);
 
@@ -458,9 +583,9 @@
       ctx.font = '600 14px Inter, -apple-system, sans-serif';
       const rw = ctx.measureText(rightText).width + 32;
       roundRect(ctx, W - 62 - rw, 60, rw, 36, 18);
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.07)';
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
       ctx.fill();
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.16)';
+      ctx.strokeStyle = T.frameBorder;
       ctx.lineWidth = 1.2;
       ctx.stroke();
       ctx.fillStyle = '#e2e8f0';
@@ -468,9 +593,9 @@
 
       // Hero Name (Gradient)
       const nameGrad = ctx.createLinearGradient(64, 150, 760, 210);
-      nameGrad.addColorStop(0, '#ffffff');
-      nameGrad.addColorStop(0.55, '#bfdbfe');
-      nameGrad.addColorStop(1, '#6ee7b7');
+      nameGrad.addColorStop(0, T.nameGrad[0]);
+      nameGrad.addColorStop(0.55, T.nameGrad[1]);
+      nameGrad.addColorStop(1, T.nameGrad[2]);
       ctx.font = '700 62px "Google Sans", Inter, -apple-system, sans-serif';
       ctx.fillStyle = nameGrad;
       ctx.fillText(name, 64, 172);
@@ -483,29 +608,29 @@
 
       // Project Highlight
       ctx.font = '600 19px Inter, -apple-system, sans-serif';
-      ctx.fillStyle = '#34d399';
+      ctx.fillStyle = T.projectColor;
       ctx.fillText('🚀  ' + project, 64, 274);
 
       // Two Glassmorphic Inner Panels
       const boxY = 318, boxH = 200, boxW = 524;
       roundRect(ctx, 64, boxY, boxW, boxH, 20);
-      ctx.fillStyle = 'rgba(20, 28, 48, 0.72)';
+      ctx.fillStyle = T.panelBg;
       ctx.fill();
-      ctx.strokeStyle = 'rgba(56, 189, 248, 0.30)';
+      ctx.strokeStyle = T.leftBorder;
       ctx.lineWidth = 1.5;
       ctx.stroke();
 
       const rx = 64 + boxW + 24;
       roundRect(ctx, rx, boxY, boxW, boxH, 20);
-      ctx.fillStyle = 'rgba(20, 28, 48, 0.72)';
+      ctx.fillStyle = T.panelBg;
       ctx.fill();
-      ctx.strokeStyle = 'rgba(52, 211, 153, 0.30)';
+      ctx.strokeStyle = T.rightBorder;
       ctx.lineWidth = 1.5;
       ctx.stroke();
 
       // Left Panel: Antigravity Superpowers
       ctx.font = '700 15px Inter, -apple-system, sans-serif';
-      ctx.fillStyle = '#38bdf8';
+      ctx.fillStyle = T.leftTitle;
       ctx.fillText('⚡ ANTIGRAVITY SUPERPOWERS UNLOCKED', 90, boxY + 34);
 
       ctx.font = '600 14px Inter, -apple-system, sans-serif';
@@ -515,22 +640,22 @@
 
       drawPills(ctx, active.features, 90, boxY + 62, boxW - 52, {
         font: '600 16px "Google Sans Mono", ui-monospace, monospace',
-        bg: 'rgba(56, 189, 248, 0.14)',
-        border: 'rgba(56, 189, 248, 0.45)',
-        fg: '#e0f2fe',
+        bg: T.featPill.bg,
+        border: T.featPill.border,
+        fg: T.featPill.fg,
         radius: 10
       });
 
       // Right Panel: Official Google Skills
       ctx.font = '700 15px Inter, -apple-system, sans-serif';
-      ctx.fillStyle = '#34d399';
+      ctx.fillStyle = T.rightTitle;
       ctx.fillText('🧩 OFFICIAL GOOGLE AGENT SKILLS', rx + 26, boxY + 34);
 
       drawPills(ctx, active.skills, rx + 26, boxY + 62, boxW - 52, {
         font: '600 16px Inter, -apple-system, sans-serif',
-        bg: ['rgba(66,133,244,0.16)', 'rgba(251,188,5,0.16)', 'rgba(52,168,83,0.16)', 'rgba(56,189,248,0.16)'],
-        border: ['rgba(66,133,244,0.52)', 'rgba(251,188,5,0.52)', 'rgba(52,168,83,0.52)', 'rgba(56,189,248,0.52)'],
-        fg: ['#bfdbfe', '#fef08a', '#bbf7d0', '#bae6fd'],
+        bg: T.skillPill.bg,
+        border: T.skillPill.border,
+        fg: T.skillPill.fg,
         radius: 18
       });
 
@@ -540,7 +665,7 @@
       ctx.fillText('Google Antigravity  •  Desktop, CLI & Web (antigravity.google.com)', 64, 566);
 
       ctx.font = '700 17px "Google Sans Mono", ui-monospace, monospace';
-      ctx.fillStyle = '#38bdf8';
+      ctx.fillStyle = T.ctaColor;
       const cta = 'Try it → g.dev/ai/agentskills';
       ctx.fillText(cta, W - 64 - ctx.measureText(cta).width, 566);
 
